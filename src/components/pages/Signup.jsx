@@ -1,5 +1,5 @@
 import React from "react";
-
+// ok
 const Signup = () => {
   return (
     <div className="flex justify-center items-center w-full min-h-screen bg-base-200">
