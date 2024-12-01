@@ -77,6 +77,14 @@ const Signup = () => {
                 }
               />
             </div>
+            <div className="mt-4">
+              <p className="text-sm">
+                you have an account?
+                <a href="/login" className="text-primary px-4">
+                  login here
+                </a>
+              </p>
+            </div>
             <div className="form-control mt-4">
               <label className="cursor-pointer label">
                 <input type="checkbox" className="checkbox checkbox-primary" />
@@ -85,6 +93,7 @@ const Signup = () => {
                 </span>
               </label>
             </div>
+
             <div className="form-control mt-6">
               <button className="btn btn-primary">Sign Up</button>
             </div>

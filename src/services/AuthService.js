@@ -41,7 +41,7 @@ const register = async (formData) => {
 
 const validateToken = () => {
   try {
-    const token = CookieService.getCookie("auth-token");
+    const token = CookieService.getCookie("token");
 
     if (token) {
       const decoded = jwtDecode(token);
@@ -49,7 +49,7 @@ const validateToken = () => {
       if (decoded.exp > currentTime) {
         return true;
       } else {
-        CookieService.clearCookie("auth-token");
+        CookieService.clearCookie("token");
       }
       return false;
     } else {
@@ -73,7 +73,7 @@ const isAuthenticatedUser = () => {
 };
 
 const logout = () => {
-  CookieService.clearCookie("auth-token");
+  CookieService.clearCookie("token");
 };
 
 export const AuthService = {

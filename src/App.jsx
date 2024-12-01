@@ -6,6 +6,7 @@ import "./App.css";
 import Signup from "./components/pages/Signup";
 import Login from "./components/pages/Login";
 import Home from "./components/pages/Home";
+import Feed from "./components/pages/Feed";
 import { store } from "./utils/store";
 import { Provider } from "react-redux";
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/feed" element={<Feed />} />
             <Route path="*" element={<h1>no page found</h1>} />
           </Routes>
         </BrowserRouter>

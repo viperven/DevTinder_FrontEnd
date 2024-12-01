@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AuthService } from "../../services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -22,6 +22,12 @@ const Login = () => {
       alert("Invalid credentials " + data?.message);
     }
   };
+
+  useEffect(() => {
+    if (AuthService.isAuthenticatedUser()) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="flex justify-center items-center w-full min-h-screen bg-base-200">
@@ -63,7 +69,7 @@ const Login = () => {
           </form>
           <div className="mt-4">
             <p className="text-sm">
-              Don't have an account?{" "}
+              Don't have an account?
               <a href="/signup" className="text-primary">
                 Register here
               </a>
