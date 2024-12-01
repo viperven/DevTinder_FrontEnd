@@ -3,7 +3,7 @@ import TinderCard from "react-tinder-card";
 import Layout from "../layout/Layout";
 import { DataService } from "../../services/DataSerivce";
 import { useDispatch, useSelector } from "react-redux";
-import { storeFeed } from "../../utils/feedSlice";
+import { storeFeed, removeFeed } from "../../utils/feedSlice";
 
 import img1 from "../../assets/images/car.png";
 import img2 from "../../assets/images/bullet_train.png";
@@ -13,29 +13,23 @@ function feed() {
   const userFeed = useSelector((state) => state.feed);
   const disPatch = useDispatch();
 
-  const [cards, setCards] = useState([
-    { id: 1, name: "John Doe", image: img1 },
-    {
-      id: 2,
-      name: "Jane Smith",
-      image: img2,
-    },
-    { id: 3, name: "CHIGA Doe", image: img1 },
-    {
-      id: 4,
-      name: "pOGA Smith",
-      image: img2,
-    },
-  ]);
   console.log(feedData);
+  console.log(userFeed, "kkl");
 
-  const onSwipe = (direction, name) => {
-    console.log(`You swiped ${direction} on ${name}`);
+  const onSwipe = async (direction, name, id) => {
+    console.log(`You swiped ${direction} on ${name} and id ${id}`);
+    const action = direction === "right" ? "interested" : "rejected";
+    const data = await DataService.sendRequest(action, id);
+    if (data?.isSuccess) {
+      const removeCard = api.filter((curElm) => curElm._id !== id);
+      setFeedData(removeCard);
+      disPatch(removeFeed(id));
+    }
   };
 
   const onCardLeftScreen = (name) => {
     console.log(`${name} left the screen`);
-    setCards((prev) => prev.slice(0, -1)); // Remove the last card
+    setFeedData((prev) => prev.slice(0, -1)); // Remove the last card
   };
 
   const initProfileData = async () => {
@@ -66,7 +60,7 @@ function feed() {
             {feedData.map((card, index) => (
               <TinderCard
                 key={card._id}
-                onSwipe={(dir) => onSwipe(dir, card.firstName)}
+                onSwipe={(dir) => onSwipe(dir, card?.firstName, card?._id)}
                 onCardLeftScreen={() => onCardLeftScreen(card.firstName)}
                 className="absolute w-full h-full"
               >

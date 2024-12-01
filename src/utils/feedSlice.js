@@ -8,7 +8,7 @@ export const feedSlice = createSlice({
       state.push(...action.payload);
     },
     removeFeed: (state, action) => {
-      return state.filter((curElm) => curElm.id !== action.payload);
+      return state.filter((curElm) => curElm._id !== action.payload);
     },
   },
 });
