@@ -21,15 +21,10 @@ function feed() {
     const action = direction === "right" ? "interested" : "rejected";
     const data = await DataService.sendRequest(action, id);
     if (data?.isSuccess) {
-      const removeCard = api.filter((curElm) => curElm._id !== id);
+      const removeCard = feedData.filter((curElm) => curElm._id !== id);
       setFeedData(removeCard);
       disPatch(removeFeed(id));
     }
-  };
-
-  const onCardLeftScreen = (name) => {
-    console.log(`${name} left the screen`);
-    setFeedData((prev) => prev.slice(0, -1)); // Remove the last card
   };
 
   const initProfileData = async () => {
@@ -61,7 +56,7 @@ function feed() {
               <TinderCard
                 key={card._id}
                 onSwipe={(dir) => onSwipe(dir, card?.firstName, card?._id)}
-                onCardLeftScreen={() => onCardLeftScreen(card.firstName)}
+                // onCardLeftScreen={() => onCardLeftScreen(card.firstName)}
                 className="absolute w-full h-full"
               >
                 <div className="card bg-base-100 w-96 shadow-xl">
@@ -72,15 +67,27 @@ function feed() {
                     <h2 className="card-title">
                       {card?.firstName}
                       {card?.keySkills.map((skill, index) => (
-                        <div className="badge badge-secondary">{skill}</div>
+                        <div key={index} className="badge badge-secondary">
+                          {skill}
+                        </div>
                       ))}
                     </h2>
                     <p>{card?.summary || ""}</p>
                     <div className="card-actions justify-end">
-                      <button className=" badge badge-outline bg-pink-600 text-lg p-4 hover:bg-sky-500 ">
+                      <button
+                        onClick={() =>
+                          onSwipe("right", card?.firstName, card?._id)
+                        }
+                        className=" badge badge-outline bg-pink-600 text-lg p-4 hover:bg-sky-500 "
+                      >
                         Like
                       </button>
-                      <button className=" badge badge-outline text-lg p-4 hover:bg-sky-500 ">
+                      <button
+                        onClick={() =>
+                          onSwipe("left", card?.firstName, card?._id)
+                        }
+                        className=" badge badge-outline text-lg p-4 hover:bg-sky-500 "
+                      >
                         pass
                       </button>
                     </div>

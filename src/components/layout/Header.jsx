@@ -1,11 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthService } from "../../services/AuthService";
+import { useSelector } from "react-redux";
+import { DataService } from "../../services/DataSerivce";
+import { addUser } from "../../utils/userSlice";
 
 function Hearder() {
+  const user = useSelector((state) => state.user);
+  const [headerData, setHeaderData] = useState("");
   const handleLogout = () => {
     AuthService.logout();
   };
+
+  const initHeaderData = async () => {
+    try {
+      if (user.length > 0) {
+        setHeaderData(user);
+        return;
+      }
+      const data = await DataService.getProfileData();
+      console.log(data);
+
+      if (data?.isSuccess) {
+        setHeaderData(data?.apiData);
+        dispatch(addUser(data?.apiData));
+      }
+    } catch (error) {
+      // console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    initHeaderData();
+  }, []);
 
   return (
     <div className="navbar bg-base-100">
@@ -46,6 +73,7 @@ function Hearder() {
             </div>
           </div>
         </div>
+        <h3>{headerData?.firstName}</h3>
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
@@ -55,7 +83,7 @@ function Hearder() {
             <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src={headerData?.photoUrl}
               />
             </div>
           </div>
@@ -64,11 +92,13 @@ function Hearder() {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
             <li>
-              <a className="justify-between">
+              <NavLink to="/profile" clNavLinkssName="justify-between">
                 Profile
                 <span className="badge">New</span>
-              </a>
+              </NavLink>
             </li>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/feed">Feed</NavLink>
             <NavLink to="/settigs">Settings</NavLink>
             <NavLink to="/login" onClick={handleLogout}>
               Logout

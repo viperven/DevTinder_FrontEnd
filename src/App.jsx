@@ -9,6 +9,7 @@ import Home from "./components/pages/Home";
 import Feed from "./components/pages/Feed";
 import { store } from "./utils/store";
 import { Provider } from "react-redux";
+import Profile from "./components/pages/Profile";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/feed" element={<Feed />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<h1>no page found</h1>} />
           </Routes>
         </BrowserRouter>

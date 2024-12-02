@@ -48,7 +48,25 @@ const sendRequest = async (action, id) => {
   }
 };
 
+const getProfileData = async () => {
+  try {
+    const res = await fetch(DomainService.GetBaseUrl() + "profile/view", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
 export const DataService = {
   getFeedData,
   sendRequest,
+  getProfileData,
 };
