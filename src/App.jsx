@@ -12,6 +12,7 @@ import { Provider } from "react-redux";
 import Profile from "./components/pages/Profile";
 import Test from "./Test";
 import Chat from "./components/pages/chat";
+import Requests from "./components/pages/Requests";
 
 function App() {
   return (
@@ -25,8 +26,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/test" element={<Test />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/requests" element={<Requests />} />
+            <Route path="/test" element={<Test />} />
             <Route path="*" element={<h1>no page found</h1>} />
           </Routes>
         </BrowserRouter>

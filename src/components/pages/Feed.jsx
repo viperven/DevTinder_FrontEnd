@@ -7,12 +7,12 @@ import { storeFeed, removeFeed } from "../../utils/feedSlice";
 
 import img1 from "../../assets/images/car.png";
 import img2 from "../../assets/images/bullet_train.png";
+import { AuthService } from "../../services/AuthService";
 
 function feed() {
   const [feedData, setFeedData] = useState([]);
   const userFeed = useSelector((state) => state.feed);
   const disPatch = useDispatch();
-
 
   const onSwipe = async (direction, name, id) => {
     const action = direction === "right" ? "interested" : "rejected";
@@ -41,6 +41,10 @@ function feed() {
   };
 
   useEffect(() => {
+    if (!AuthService.isAuthenticatedUser()) {
+      navigate("/login");
+      return;
+    }
     initProfileData();
   }, []);
 
