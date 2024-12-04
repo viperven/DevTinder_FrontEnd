@@ -13,7 +13,7 @@ function Hearder() {
 
   const initHeaderData = async () => {
     try {
-      if (user.length > 0) {
+      if (user && typeof user === "object" && user?._id) {
         setHeaderData(user);
         return;
       }
@@ -35,18 +35,18 @@ function Hearder() {
 
   const handleToggle = (e) => {
     const buttonChecked = e.target.checked;
-    const userTheme = buttonChecked ? "winter" : "dracula"
-    setUserSelectedTheme(userTheme)
-    localStorage.setItem("theme", userTheme)
-  }
+    const userTheme = buttonChecked ? "winter" : "dracula";
+    setUserSelectedTheme(userTheme);
+    localStorage.setItem("theme", userTheme);
+  };
 
   const initSetTheme = () => {
     const theme = localStorage.getItem("theme");
-    if (theme && theme==="winter") {
-      setUserSelectedTheme("winter")
+    if (theme && theme === "winter") {
+      setUserSelectedTheme("winter");
       document.getElementById("themeInput").checked = true;
     }
-  }
+  };
 
   useEffect(() => {
     initHeaderData();
@@ -55,9 +55,11 @@ function Hearder() {
 
   console.log("them in page", userSelectedTheme);
 
-
   return (
-    <div className="navbar bg-base-200 border-b-4 border-cyan-50" style={{ borderRadius: "6px" }} >
+    <div
+      className="navbar bg-base-200 border-b-4 border-cyan-50"
+      style={{ borderRadius: "6px" }}
+    >
       <div className="flex-1">
         <a className="btn btn-ghost text-xl">daisyUI</a>
       </div>
@@ -71,13 +73,19 @@ function Hearder() {
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
-          strokeLinejoin="round">
+          strokeLinejoin="round"
+        >
           <circle cx="12" cy="12" r="5" />
-          <path
-            d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+          <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
         </svg>
         <label className="flex cursor-pointer gap-2">
-          <input id="themeInput" type="checkbox" value={userSelectedTheme} className="toggle theme-controller" onClick={handleToggle} />
+          <input
+            id="themeInput"
+            type="checkbox"
+            value={userSelectedTheme}
+            className="toggle theme-controller"
+            onClick={handleToggle}
+          />
         </label>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +96,8 @@ function Hearder() {
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
-          strokeLinejoin="round">
+          strokeLinejoin="round"
+        >
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
       </label>
@@ -158,7 +167,6 @@ function Hearder() {
             </NavLink>
           </ul>
         </div>
-
       </div>
     </div>
   );
