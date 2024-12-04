@@ -10,6 +10,8 @@ import Feed from "./components/pages/Feed";
 import { store } from "./utils/store";
 import { Provider } from "react-redux";
 import Profile from "./components/pages/Profile";
+import Test from "./Test";
+import Chat from "./components/pages/chat";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/test" element={<Test />} />
+            <Route path="/chat" element={<Chat />} />
             <Route path="*" element={<h1>no page found</h1>} />
           </Routes>
         </BrowserRouter>

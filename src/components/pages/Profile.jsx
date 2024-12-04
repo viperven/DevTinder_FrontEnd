@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { AuthService } from "../../services/AuthService";
 import { DataService } from "../../services/DataSerivce";
 import { addUser } from "../../utils/userSlice";
+import Layout from "../layout/Layout";
 
 function Profile() {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState("");
 
-  console.log(user, "user");
 
   const initProfileData = async () => {
     try {
@@ -38,7 +38,8 @@ function Profile() {
 
   return (
     <>
-      <div className="flex justify-center items-center w-full min-h-screen bg-base from-blue-50 via-white to-blue-50 gap-8 p-6 flex-wrap">
+    <Layout>
+      <div className="flex justify-center items-center w-full min-h-screen bg-base from-blue-50 via-white to-blue-50 gap-8  flex-wrap">
         <div className="card w-full h-[700px] max-w-md bg-base-100 shadow-xl border border-gray-200">
           <div className="card-body">
             <h2 className="card-title text-3xl font-bold text-blue-600 mb-6">
@@ -142,6 +143,7 @@ function Profile() {
           </div>
         </div>
       </div>
+      </Layout>
     </>
   );
 }

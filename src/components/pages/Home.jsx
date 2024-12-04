@@ -12,30 +12,31 @@ function Home() {
   const navigate = useNavigate();
   const [homeData, setHomeData] = useState("");
 
-  const initHomeData = async () => {
-    try {
-      if (user.length > 0) {
-        setHomeData(user);
-        return;
-      }
-      const data = await DataService.getProfileData();
-      console.log(data);
+  // const initHomeData = async () => {
+  //   try {
+  //     debugger
+  //     if (user.length > 0) {
+  //       setHomeData(user);
+  //       return;
+  //     }
+  //     const data = await DataService.getProfileData();
+  //     console.log(data);
 
-      if (data?.isSuccess) {
-        setHomeData(data?.apiData);
-        dispatch(addUser(data?.apiData));
-      }
-    } catch (error) {
-      // console.error(error);
-    }
-  };
+  //     if (data?.isSuccess) {
+  //       setHomeData(data?.apiData);
+  //       dispatch(addUser(data?.apiData));
+  //     }
+  //   } catch (error) {
+  //     // console.error(error);
+  //   }
+  // };
 
   useEffect(() => {
     if (!AuthService.isAuthenticatedUser()) {
       navigate("/login");
       return;
     }
-    initHomeData();
+    // initHomeData();
   }, []);
 
   return (

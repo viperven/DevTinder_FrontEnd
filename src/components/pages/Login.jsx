@@ -14,7 +14,6 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    debugger;
     const data = await AuthService.loginUser(formData);
     if (data?.isSuccess) {
       dispatch(addUser(data?.apiData));
