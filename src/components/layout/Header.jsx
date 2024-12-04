@@ -35,10 +35,15 @@ function Hearder() {
   }, []);
 
   return (
-    <div className="navbar bg-base-100">
-      <div className="flex-1">
-        <a className="btn btn-ghost text-xl">daisyUI</a>
-      </div>
+    <div className="navbar bg-gradient-to-b from-black to-gray-700">
+      <div className="flex-1 flex items-center"> 
+    <img
+      src="https://www.logo.wine/a/logo/Tinder_(app)/Tinder_(app)-Flame-Logo.wine.svg" 
+      alt="DevTinder Logo"
+      className="h-8 w-8 mr-2" 
+    />
+    <a className="btn btn-ghost text-xl">DevTinder</a>
+  </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">

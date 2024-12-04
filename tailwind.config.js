@@ -7,7 +7,7 @@ export default {
     extend: {},
   },
   plugins: [daisyui],
-  daisyui: {
+  daisyui: { 
     themes: ["dracula"],
   },
 };

@@ -29,10 +29,10 @@ function Profile() {
   };
 
   useEffect(() => {
-    if (!AuthService.isAuthenticatedUser()) {
-      navigate("/login");
-      return;
-    }
+    // if (!AuthService.isAuthenticatedUser()) {
+    //   navigate("/login");
+    //   return;
+    // }
     initProfileData();
   }, []);
 
