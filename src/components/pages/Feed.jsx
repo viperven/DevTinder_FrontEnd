@@ -13,11 +13,8 @@ function feed() {
   const userFeed = useSelector((state) => state.feed);
   const disPatch = useDispatch();
 
-  console.log(feedData);
-  console.log(userFeed, "kkl");
 
   const onSwipe = async (direction, name, id) => {
-    console.log(`You swiped ${direction} on ${name} and id ${id}`);
     const action = direction === "right" ? "interested" : "rejected";
     const data = await DataService.sendRequest(action, id);
     if (data?.isSuccess) {

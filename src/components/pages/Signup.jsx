@@ -16,7 +16,6 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      debugger;
       console.log(formData.email);
       const data = await AuthService.register(formData);
       console.log(data);
