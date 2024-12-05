@@ -92,15 +92,6 @@ function Hearder() {
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
       </label>
-    <div className="navbar bg-gradient-to-b from-black to-gray-700">
-      <div className="flex-1 flex items-center"> 
-    <img
-      src="https://www.logo.wine/a/logo/Tinder_(app)/Tinder_(app)-Flame-Logo.wine.svg" 
-      alt="DevTinder Logo"
-      className="h-8 w-8 mr-2" 
-    />
-    <a className="btn btn-ghost text-xl">DevTinder</a>
-  </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
           {/* <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -174,3 +165,4 @@ function Hearder() {
 }
 
 export default Hearder;
+      
