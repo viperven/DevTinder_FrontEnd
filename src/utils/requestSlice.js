@@ -7,8 +7,8 @@ export const requestSlice = createSlice({
     storeRequest: (state, action) => {
       state.push(...action.payload);
     },
-    removeRequest: (state, action) => {
-      return state.filter((curElm) => curElm._id !== action.payload);
+    removeRequest: (state, action) => {      
+      return state.filter((curElm) => curElm.senderID._id !== action.payload);
     },
   },
 });

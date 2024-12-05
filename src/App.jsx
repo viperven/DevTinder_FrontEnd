@@ -13,6 +13,8 @@ import Profile from "./components/pages/Profile";
 import Test from "./Test";
 import Chat from "./components/pages/chat";
 import Requests from "./components/pages/Requests";
+import Connection from "./components/pages/Connections";
+import Ignore from "./components/pages/Ignore";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/requests" element={<Requests />} />
+            <Route path="/connection" element={<Connection />} />
+            <Route path="/ignore" element={<Ignore />} />
             <Route path="/test" element={<Test />} />
             <Route path="*" element={<h1>no page found</h1>} />
           </Routes>
