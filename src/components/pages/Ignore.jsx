@@ -5,45 +5,43 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Layout from "../layout/Layout";
 import { useNavigate } from "react-router-dom";
-import { storeConnection } from "../../utils/connectionSlice";
+import { storeIgnoreList } from "../../utils/ignoreSlice";
 
-function Connection() {
-    const userConnections = useSelector((state) => state?.connection);
+
+function Ignore() {
+    const userIgnoreList = useSelector((state) => state?.connection);
     const loggedInUserId =  useSelector((state) => state.user._id); 
 
     const disPatch = useDispatch();
     const navigate = useNavigate();
 
-    const getConnectionData = async () => {
+    const getIgnoreData = async () => {
         try {
-            if (userConnections && userConnections.length > 0) {
+            if (userIgnoreList && userIgnoreList.length > 0) {
                 return;
             }
-            const data = await DataService.getConnectionData();
+            const data = await DataService.getIgnoreData();
             if (data?.isSuccess) {
-                disPatch(storeConnection(data?.apiData));
+                disPatch(storeIgnoreList(data?.apiData));
             }
         } catch (error) {
             //   console.log(error);
         }
     };
 
-
     useEffect(() => {
         if (!AuthService.isAuthenticatedUser()) {
             navigate("/login");
             return;
         }
-        getConnectionData();
+        getIgnoreData();
     }, []);
-
-
 
     return (
         <Layout>
             <div className="grid grid-cols-2 gap-4 p-4">
-                {userConnections &&
-                    userConnections.map((connection) => {
+                {userIgnoreList &&
+                    userIgnoreList.map((connection) => {
                         // Determine the other user's details
                         const otherUser =
                             connection.senderID._id === loggedInUserId
@@ -73,4 +71,4 @@ function Connection() {
     );
 }
 
-export default Connection;
+export default Ignore;

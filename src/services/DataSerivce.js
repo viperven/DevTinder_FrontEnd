@@ -124,6 +124,23 @@ const getConnectionData = async () => {
   }
 };
 
+//to fetch user ignore List
+const getIgnoreData = async () => {
+  try {
+    const res = await fetch(DomainService.GetBaseUrl() + "user/ignore", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 
 export const DataService = {
   getFeedData,
@@ -131,5 +148,6 @@ export const DataService = {
   getProfileData,
   getRequestsData,
   reviewRequest,
-  getConnectionData
+  getConnectionData,
+  getIgnoreData
 };
