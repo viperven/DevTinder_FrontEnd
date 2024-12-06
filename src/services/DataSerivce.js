@@ -4,11 +4,11 @@ const getFeedData = async (pageSize = null, pageIndex = null) => {
   try {
     const res = await fetch(
       DomainService.GetBaseUrl() +
-      "user/feed?" +
-      "pageSize=" +
-      pageSize +
-      "pageIndex=" +
-      pageIndex,
+        "user/feed?" +
+        "pageSize=" +
+        pageSize +
+        "pageIndex=" +
+        pageIndex,
       {
         method: "GET",
         headers: {
@@ -24,7 +24,6 @@ const getFeedData = async (pageSize = null, pageIndex = null) => {
     console.error("Error:", error);
   }
 };
-
 
 const getProfileData = async () => {
   try {
@@ -90,21 +89,23 @@ const reviewRequest = async (status, id) => {
     if (!["accepted", "ignored"].includes(status)) {
       return;
     }
-    const res = await fetch(DomainService.GetBaseUrl() + "request/review/" + status + "/" + id, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    });
+    const res = await fetch(
+      DomainService.GetBaseUrl() + "request/review/" + status + "/" + id,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
     const data = await res.json();
     return data;
   } catch (error) {
     console.error("Error:", error);
   }
 };
-
 
 //to fetch user connection
 const getConnectionData = async () => {
@@ -142,6 +143,46 @@ const getIgnoreData = async () => {
   }
 };
 
+//delete user
+const deleteUser = async () => {
+  try {
+    const res = await fetch(DomainService.GetBaseUrl() + "auth/delete", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+//delete user
+const updatePassword = async (formData) => {
+  try {
+    const res = await fetch(
+      DomainService.GetBaseUrl() + "auth/updatePassword",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
 export const DataService = {
   getFeedData,
   sendRequest,
@@ -149,5 +190,7 @@ export const DataService = {
   getRequestsData,
   reviewRequest,
   getConnectionData,
-  getIgnoreData
+  getIgnoreData,
+  deleteUser,
+  updatePassword,
 };

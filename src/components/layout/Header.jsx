@@ -141,6 +141,7 @@ function Hearder() {
             <NavLink to="/requests">Requests</NavLink>
             <NavLink to="/connection">Connections</NavLink>
             <NavLink to="/ignore">Ignore</NavLink>
+            <NavLink to="/settings">Settings</NavLink>
             <NavLink to="/login" onClick={handleLogout}>
               Logout
             </NavLink>

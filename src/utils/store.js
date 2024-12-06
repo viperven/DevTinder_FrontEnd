@@ -13,6 +13,6 @@ export const store = configureStore({
     theme: themeReducer,
     request: requestReducer,
     connection: connectionReducer,
-    ignoreSlice: ignoreSliceReducer,
+    ignore: ignoreSliceReducer,
   },
 });
