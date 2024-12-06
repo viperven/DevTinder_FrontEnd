@@ -8,9 +8,9 @@ import Layout from "../layout/Layout";
 
 function Profile() {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState("");
-  const dispatch = useDispatch();
 
   const initProfileData = async () => {
     try {
