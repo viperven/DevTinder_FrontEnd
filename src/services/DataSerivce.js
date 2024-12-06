@@ -183,6 +183,50 @@ const updatePassword = async (formData) => {
   }
 };
 
+//GET Last of all connection
+const getConnectionsLastMessage = async () => {
+  try {
+    const res = await fetch(
+      DomainService.GetBaseUrl() + "message/conversations",
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+
+//GET all message by user id 
+const getAllMessageByUserId = async () => {
+  try {
+    const res = await fetch(
+      DomainService.GetBaseUrl() + "message/conversations",
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+
 export const DataService = {
   getFeedData,
   sendRequest,
@@ -193,4 +237,6 @@ export const DataService = {
   getIgnoreData,
   deleteUser,
   updatePassword,
+  getConnectionsLastMessage,
+  getAllMessageByUserId
 };

@@ -11,7 +11,7 @@ const Settings = () => {
   const navigate = useNavigate();
   const disPatch = useDispatch();
   const userData = useSelector((state) => state.user);
-  const [showAlert, setShowAlert] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [communicationPreferences, setCommunicationPreferences] =
     useState(false);
   const [resetPassword, setResetPassword] = useState({
@@ -20,25 +20,57 @@ const Settings = () => {
     confirmPassword: "",
     otp: "",
     step: "",
-    userOtp: "",
-    step: "",
   });
 
   const handlePasswordChange = async () => {
     try {
-      if (resetPassword.newPassword === resetPassword.confirmPassword) {
+      debugger
+      if (resetPassword.newPassword !== resetPassword.confirmPassword) {
+        // setShowModal(true);
         alert("new Password ad confirm password not matched");
         return;
       }
-
-      const data = await DataService.updatePassword();
-      if (data?.isSuccess) {
+      const parameter = {
+        "emailId": userData.emailId,
+        "newPassword": resetPassword.newPassword,
+        "userOtp": resetPassword.otp,
+        "step": "0"
       }
-      document.getElementById("my_modal_3").showModal();
+      const data = await DataService.updatePassword(parameter);
+      if (data?.isSuccess) {
+        document.getElementById("my_modal_3").showModal();
+      }
+      else {
+        alert("something went wrong try again later")
+      }
+
     } catch (err) {
       console.log(err?.message);
     }
   };
+
+  const handleVerifyOtp = async () => {
+    try {
+      const parameter = {
+        "emailId": userData.emailId,
+        "newPassword": resetPassword.newPassword,
+        "userOtp": resetPassword.otp,
+        "step": "1"
+      }
+      debugger
+      const data = await DataService.updatePassword(parameter);
+      if (data?.isSucess) {
+        alert("password chnaged sucessfully")
+        document.getElementById("my_modal_3").close();
+      }
+      else {
+        alert("otp missmatch or expired try again");
+      }
+    }
+    catch (err) {
+      console.log(err?.message);
+    }
+  }
 
   const handleDeleteUser = async () => {
     try {
@@ -72,24 +104,40 @@ const Settings = () => {
     }
   }, []);
 
+  console.log(resetPassword);
+
+
   return (
     <Layout>
       {
-        <>
-          <dialog id="my_modal_3" className="modal">
-            <div className="modal-box">
-              <form method="dialog">
-                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                  ✕
-                </button>
-              </form>
-              <h3 className="font-bold text-lg">Hello!</h3>
-              <p className="py-4">
-                Press ESC key or click on ✕ button to close
-              </p>
+        //modal
+        <dialog id="my_modal_3" className="modal">
+          <div className="modal-box">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+            <h3 className="font-bold text-lg">Enter Your OTP</h3>
+            <p className="py-4">Please enter the 4-digit OTP sent to your phone.</p>
+            <input
+              type="text"
+              maxLength="4"
+              pattern="\d{4}"
+              className="input input-bordered w-full"
+              placeholder="Enter 4-digit OTP"
+              onChange={(e) => {
+                setResetPassword((prev) => ({
+                  ...prev,
+                  otp: e.target.value,
+                }));
+              }}
+            />
+            <div className="flex items-center justify-between mt-2 ">
+              <p className="text-indigo-400">Otp will be valid for 2 minutes</p>
+              <button type="button" className="btn" onClick={handleVerifyOtp}>Verify</button>
             </div>
-          </dialog>
-        </>
+          </div>
+        </dialog>
+
       }
 
       <div className="flex min-h-screen bg-base-200">
@@ -180,44 +228,43 @@ const Settings = () => {
             className="card bg-base shadow-xl p-6 mb-6"
           >
             <h2 className="text-xl font-bold mb-4">Update Password</h2>
-            <form>
-              <div className="form-control mb-4">
-                <label className="label">
-                  <span className="label-text">New Password</span>
-                </label>
-                <input
-                  type="password"
-                  className="input input-bordered w-full"
-                  onChange={(e) => {
-                    resetPassword((prev) => ({
-                      ...prev,
-                      newPassword: e.target.value,
-                    }));
-                  }}
-                />
-              </div>
-              <div className="form-control mb-4">
-                <label className="label">
-                  <span className="label-text">Confirm Password</span>
-                </label>
-                <input
-                  type="password"
-                  className="input input-bordered w-full"
-                  onChange={(e) => {
-                    resetPassword((prev) => ({
-                      ...prev,
-                      confirmPassword: e.target.value,
-                    }));
-                  }}
-                />
-              </div>
-              <button
-                className="btn btn-primary"
-                onClick={handlePasswordChange}
-              >
-                Update Password
-              </button>
-            </form>
+
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">New Password</span>
+              </label>
+              <input
+                type="password"
+                className="input input-bordered w-full"
+                onChange={(e) => {
+                  setResetPassword((prev) => ({
+                    ...prev,
+                    newPassword: e.target.value,
+                  }));
+                }}
+              />
+            </div>
+            <div className="form-control mb-4">
+              <label className="label">
+                <span className="label-text">Confirm Password</span>
+              </label>
+              <input
+                type="password"
+                className="input input-bordered w-full"
+                onChange={(e) => {
+                  setResetPassword((prev) => ({
+                    ...prev,
+                    confirmPassword: e.target.value,
+                  }));
+                }}
+              />
+            </div>
+            <button
+              className="btn btn-primary"
+              onClick={handlePasswordChange}
+            >
+              Update Password
+            </button>
           </section>
 
           {/* Communication Preferences Section */}

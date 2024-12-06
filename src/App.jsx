@@ -16,6 +16,7 @@ import Requests from "./components/pages/Requests";
 import Connection from "./components/pages/Connections";
 import Ignore from "./components/pages/Ignore";
 import Settings from "./components/pages/settings";
+import Conversation from "./components/pages/Conversation";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/feed" element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/chat" element={<Chat />} />
+            <Route path="/conversation" element={<Conversation />} />
             <Route path="/requests" element={<Requests />} />
             <Route path="/connection" element={<Connection />} />
             <Route path="/ignore" element={<Ignore />} />
