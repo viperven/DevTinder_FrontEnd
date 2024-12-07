@@ -7,20 +7,17 @@ import { useParams } from "react-router-dom";
 
 function Conversation() {
   const socket = useSocket();
-  const { id } = useParams();
+  const { cid,rid } = useParams();
   const [messageList, setMessageList] = useState([]);
   const loggedInUserId = useSelector((state) => state.user._id);
   const loggedInUser = useSelector((state) => state.user);
   const [message, setMessage] = useState("");
 
-  const formatTime = (date) => {
-    const time = new Date(date).toLocaleTimeString();
-    return time;
-  };
+  const formatTime = (date) => new Date(date).toLocaleTimeString();
 
   const getConversationMessage = async () => {
     try {
-      const data = await DataService.getAllMessageByUserId(id);
+      const data = await DataService.getAllMessageByUserId(cid);
       if (data?.isSuccess) {
         setMessageList(data?.apiData);
       }
@@ -29,20 +26,49 @@ function Conversation() {
     }
   };
 
-  const handleSendMessage = (e) => {
-    if (socket && message.trim()) {
-      console.log("Sending message:", message);
-      socket.emit("sendMessage", message);
-      setMessage(""); // Clear input field
+  const handleSendMessage = async () => {
+    debugger
+    if (!message.trim()) return;
+
+    try {
+      const payload = {
+        receiverID: rid,
+        content: message.trim(),
+        media: null, // Replace if needed
+        mediaType: null, // Replace if needed
+      };
+
+      const response = await DataService.sendMessage(payload);
+      if (response?.isSuccess) {
+        const savedMessage = response.data;
+
+        // Emit the message via Socket.IO
+        socket.emit("sendMessage", savedMessage);
+
+        // Add to the local message list
+        //setMessageList((prevMessages) => [...prevMessages, savedMessage]);
+
+        // Clear input
+        setMessage("");
+      }
+    } catch (err) {
+      console.error("Error sending message:", err.message);
     }
   };
+
+  useEffect(() => {
+    if (socket && cid) {
+      socket.emit("joinRoom", cid);
+      console.log("Joined room:", cid);
+    }
+  }, [socket, cid]);
 
   useEffect(() => {
     if (!socket) return;
 
     socket.on("receiveMessage", (newMessage) => {
       console.log("New message received:", newMessage);
-      setMessage((prevChat) => [...prevChat, newMessage]);
+      setMessageList((prevMessages) => [...prevMessages, newMessage]);
     });
 
     return () => {
@@ -56,24 +82,6 @@ function Conversation() {
 
   return (
     <>
-      {/* <div className="chat-container">
-      <div className="chat-box">
-        {chat.map((msg, index) => (
-          <div key={index} className="chat-message">
-            {msg}
-          </div>
-        ))}
-      </div>
-      <div className="chat-input">
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type your message..."
-        />
-        <button onClick={handleSendMessage}>Send</button>
-      </div>
-    </div> */}
       <Layout>
         <div className="flex justify-center mt-2 mb-2">
           <div className="mockup-phone max-w-xl w-full min-w-52">
@@ -90,11 +98,10 @@ function Conversation() {
                       <div className="chat-image avatar">
                         <div className="w-10 rounded-full">
                           <img
-                            alt={`${
-                              isSender
+                            alt={`${isSender
                                 ? loggedInUser?.firstName
                                 : user.firstName
-                            } profile image`}
+                              } profile image`}
                             src={
                               isSender ? loggedInUser?.photoUrl : user.photoUrl
                             }
@@ -102,7 +109,9 @@ function Conversation() {
                         </div>
                       </div>
                       <div className="chat-header">
-                        {user.firstName} {user.lastName}
+                        {isSender
+                          ? loggedInUser?.firstName
+                          : user.firstName} 
                         <time className="text-xs opacity-50">
                           {formatTime(cur.createdAt)}
                         </time>

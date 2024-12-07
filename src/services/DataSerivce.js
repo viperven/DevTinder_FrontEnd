@@ -227,6 +227,29 @@ const getAllMessageByUserId = async (conversationId) => {
   }
 };
 
+const sendMessage = async (formData) => {
+  try {
+    console.log(formData);
+    
+    const res = await fetch(
+      DomainService.GetBaseUrl() + "message/send" ,{
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+
 export const DataService = {
   getFeedData,
   sendRequest,
@@ -239,4 +262,5 @@ export const DataService = {
   updatePassword,
   getConnectionsLastMessage,
   getAllMessageByUserId,
+  sendMessage
 };

@@ -42,13 +42,13 @@ const Chat = () => {
     }
   };
 
-  const handleOpenChat = async (id) => {
+  const handleOpenChat = async (conversationID,receiverID) => {
     try {
       debugger;
-      if (!id) {
+      if (!conversationID && !receiverID) {
         return;
       }
-      navigate("/conversation/" + id);
+      navigate(`/conversation/${conversationID}/${receiverID}`);
     } catch (err) {
       console.log(err?.message);
     }
@@ -80,7 +80,7 @@ const Chat = () => {
                         key={otherUser?._id}
                         className="flex items-center gap-4 p-3 rounded-lg hover:bg-base-300 cursor-pointer"
                         onClick={() => {
-                          handleOpenChat(chat?._id);
+                          handleOpenChat(chat?._id,otherUser?._id);
                         }}
                       >
                         {/* Avatar */}
