@@ -1,3 +1,4 @@
+import { AuthService } from "./AuthService";
 import { DomainService } from "./DomianService";
 
 const getFeedData = async (pageSize = null, pageIndex = null) => {
@@ -14,8 +15,10 @@ const getFeedData = async (pageSize = null, pageIndex = null) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          'Authorization':  AuthService.getApiAuthorizationConfig(),
         },
         credentials: "include",
+        
       }
     );
     const data = await res.json();
@@ -32,6 +35,7 @@ const getProfileData = async () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        'Authorization':  AuthService.getApiAuthorizationConfig(),
       },
       credentials: "include",
     });
@@ -49,6 +53,7 @@ const getRequestsData = async () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        'Authorization':  AuthService.getApiAuthorizationConfig(),
       },
       credentials: "include",
     });
@@ -72,8 +77,10 @@ const sendRequest = async (status, id) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          'Authorization':  AuthService.getApiAuthorizationConfig(),
         },
         credentials: "include",
+        
       }
     );
     const data = await res.json();
@@ -96,8 +103,10 @@ const reviewRequest = async (status, id) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          'Authorization':  AuthService.getApiAuthorizationConfig(),
         },
         credentials: "include",
+        
       }
     );
     const data = await res.json();
@@ -115,6 +124,7 @@ const getConnectionData = async () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        'Authorization':  AuthService.getApiAuthorizationConfig(),
       },
       credentials: "include",
     });
@@ -133,6 +143,7 @@ const getIgnoreData = async () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        'Authorization':  AuthService.getApiAuthorizationConfig(),
       },
       credentials: "include",
     });
@@ -151,6 +162,7 @@ const deleteUser = async () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        'Authorization':  AuthService.getApiAuthorizationConfig(),
       },
       credentials: "include",
     });
@@ -171,8 +183,10 @@ const updatePassword = async (formData) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          'Authorization':  AuthService.getApiAuthorizationConfig(),
         },
         credentials: "include",
+        
         body: JSON.stringify(formData),
       }
     );
@@ -193,8 +207,10 @@ const getConnectionsLastMessage = async () => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          'Authorization':  AuthService.getApiAuthorizationConfig(),
         },
         credentials: "include",
+        
       }
     );
     const data = await res.json();
@@ -216,8 +232,10 @@ const getAllMessageByUserId = async (conversationId) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          'Authorization':  AuthService.getApiAuthorizationConfig(),
         },
         credentials: "include",
+        
       }
     );
     const data = await res.json();
@@ -237,8 +255,10 @@ const sendMessage = async (formData) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
+          'Authorization':  AuthService.getApiAuthorizationConfig(),
         },
         credentials: "include",
+        
         body: JSON.stringify(formData),
       }
     );

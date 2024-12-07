@@ -76,10 +76,20 @@ const logout = () => {
   CookieService.clearCookie("token");
 };
 
+const getApiAuthorizationConfig = () => {
+  let config = "";
+  if (CookieService.getCookie("token")) {
+      config = 'Bearer ' + CookieService.getCookie("token")
+  }
+  return config;
+}
+
+
 export const AuthService = {
   loginUser,
   validateToken,
   isAuthenticatedUser,
   logout,
   register,
+  getApiAuthorizationConfig
 };
