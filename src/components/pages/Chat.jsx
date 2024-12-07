@@ -4,53 +4,8 @@ import { DataService } from "../../services/DataSerivce";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-
 const Chat = () => {
-const navigate = useNavigate();
-  const [message, setMessage] = useState("");
-  const [chat, setChat] = useState([]);
-  const chats = [
-    {
-      id: 1,
-      name: "John Doe",
-      lastMessage: "Hey, how are you doing?",
-      time: "10:45 AM",
-      unreadCount: 2,
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      lastMessage: "Are we still on for the meeting?",
-      time: "Yesterday",
-      unreadCount: 0,
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      name: "Michael Brown",
-      lastMessage: "Call me when you're free.",
-      time: "2 Days Ago",
-      unreadCount: 1,
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      name: "Michael Brown",
-      lastMessage: "Call me when you're free.",
-      time: "2 Days Ago",
-      unreadCount: 1,
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      id: 3,
-      name: "Michael Brown",
-      lastMessage: "Call me when you're free.",
-      time: "2 Days Ago",
-      unreadCount: 1,
-      image: "https://via.placeholder.com/150",
-    },
-  ];
+  const navigate = useNavigate();
   const [lastChatData, setLastChatData] = useState([]);
   const loggedInUserId = useSelector((state) => state.user._id);
 
@@ -82,31 +37,27 @@ const navigate = useNavigate();
       if (data?.isSuccess) {
         setLastChatData(data?.apiData);
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err?.message);
-
     }
-  }
+  };
 
   const handleOpenChat = async (id) => {
     try {
-      debugger
+      debugger;
       if (!id) {
-        return
+        return;
       }
-      navigate("/conversation");
-    }
-    catch (err) {
+      navigate("/conversation/" + id);
+    } catch (err) {
       console.log(err?.message);
-
     }
-  }
+  };
 
   useEffect(() => {
     getLastConversationMessage();
-  }, [])
-
+  }, []);
+  console.log(lastChatData);
 
   return (
     <Layout>
@@ -117,8 +68,8 @@ const navigate = useNavigate();
             <div className="bg-base-100 min-h-screen flex justify-center">
               <div className="max-w-lg w-full min-w-52 bg-base shadow-lg rounded-lg p-4">
                 <h1 className="text-2xl font-bold mb-4 text-white">Chats</h1>
-                {
-                  lastChatData.length > 0 && lastChatData.map((chat, i) => {
+                {lastChatData.length > 0 &&
+                  lastChatData.map((chat, i) => {
                     const otherUser =
                       chat.senderID._id === loggedInUserId
                         ? chat.receiverID
@@ -126,27 +77,37 @@ const navigate = useNavigate();
 
                     return (
                       <div
-                        key={otherUser._id}
+                        key={otherUser?._id}
                         className="flex items-center gap-4 p-3 rounded-lg hover:bg-base-300 cursor-pointer"
-                        onClick={() => { handleOpenChat(chat._id) }}
+                        onClick={() => {
+                          handleOpenChat(chat?._id);
+                        }}
                       >
-
                         {/* Avatar */}
                         <div className="avatar">
                           <div className="w-12 rounded-full border-2 border-blue-500">
-                            <img src={otherUser.photoUrl} alt={`${otherUser?.firstName}'s Avatar image`} />
+                            <img
+                              src={otherUser?.photoUrl}
+                              alt={`${otherUser?.firstName}'s Avatar image`}
+                            />
                           </div>
                         </div>
 
                         {/* Chat Info */}
                         <div className="flex-grow">
-                          <h2 className="font-semibold text-white">{otherUser?.firstName}</h2>
-                          <p className="text-sm text-white truncate">{chat?.lastMessage?.content}</p>
+                          <h2 className="font-semibold text-white">
+                            {otherUser?.firstName}
+                          </h2>
+                          <p className="text-sm text-white truncate">
+                            {chat?.lastMessage?.content}
+                          </p>
                         </div>
 
                         {/* Chat Meta */}
                         <div className="text-right">
-                          <p className="text-xs text-white">{formatDate(chat?.updatedAt)}</p>
+                          <p className="text-xs text-white">
+                            {formatDate(chat?.updatedAt)}
+                          </p>
                           {4 > 0 && (
                             <span className="badge badge-primary badge-sm">
                               2
@@ -154,16 +115,14 @@ const navigate = useNavigate();
                           )}
                         </div>
                       </div>
-                    )
-                  })
-                }
+                    );
+                  })}
               </div>
             </div>
           </div>
         </div>
       </div>
     </Layout>
-
   );
 };
 

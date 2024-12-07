@@ -31,7 +31,7 @@ function App() {
             <Route path="/feed" element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/chat" element={<Chat />} />
-            <Route path="/conversation" element={<Conversation />} />
+            <Route path="/conversation/:id" element={<Conversation />} />
             <Route path="/requests" element={<Requests />} />
             <Route path="/connection" element={<Connection />} />
             <Route path="/ignore" element={<Ignore />} />

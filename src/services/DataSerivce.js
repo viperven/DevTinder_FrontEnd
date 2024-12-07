@@ -204,12 +204,13 @@ const getConnectionsLastMessage = async () => {
   }
 };
 
-
-//GET all message by user id 
-const getAllMessageByUserId = async () => {
+//GET all message by user id
+const getAllMessageByUserId = async (conversationId) => {
   try {
     const res = await fetch(
-      DomainService.GetBaseUrl() + "message/conversations",
+      DomainService.GetBaseUrl() +
+        "message/allMessage?conversationID=" +
+        conversationId,
       {
         method: "GET",
         headers: {
@@ -226,7 +227,6 @@ const getAllMessageByUserId = async () => {
   }
 };
 
-
 export const DataService = {
   getFeedData,
   sendRequest,
@@ -238,5 +238,5 @@ export const DataService = {
   deleteUser,
   updatePassword,
   getConnectionsLastMessage,
-  getAllMessageByUserId
+  getAllMessageByUserId,
 };
