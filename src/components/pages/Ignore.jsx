@@ -38,7 +38,7 @@ function Ignore() {
 
   return (
     <Layout>
-      <div className="grid grid-cols-2 gap-4 p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
         {userIgnoreList &&
           userIgnoreList.map((connection) => {
             // Determine the other user's details
@@ -56,11 +56,13 @@ function Ignore() {
                   <img
                     src={otherUser.photoUrl}
                     alt="profile image"
-                    className="h-28 w-32"
+                    className="h-28 w-32 sm:h-28 sm:w-32 object-cover"
                   />
                 </figure>
-                <div className="card-body">
-                  <h2 className="card-title">{otherUser.firstName}</h2>
+                <div className="card-body p-2 sm:p-4">
+                  <h2 className="card-title text-sm sm:text-lg">
+                    {otherUser.firstName}
+                  </h2>
                   <p>{otherUser.summary}</p>
                 </div>
               </div>

@@ -48,18 +48,24 @@ function feed() {
   return (
     <>
       <Layout>
-        <div className="flex items-center justify-center">
-          <div className="relative w-[350px] h-[400px]">
+        <div className="flex items-center justify-center h-[80vh]">
+          <div
+            className="relative w-[90%] max-w-[350px] h-[60vh] mx-auto"
+            style={{ top: "-10%" }}
+          >
             {feedData.map((card, index) => (
               <TinderCard
                 key={card._id}
                 onSwipe={(dir) => onSwipe(dir, card?.firstName, card?._id)}
-                // onCardLeftScreen={() => onCardLeftScreen(card.firstName)}
                 className="absolute w-full h-full"
               >
-                <div className="card bg-base-100 w-96 shadow-xl">
+                <div className="card bg-base-100 w-full h-full shadow-xl">
                   <figure>
-                    <img src={card?.photoUrl} alt="user image" />
+                    <img
+                      src={card?.photoUrl}
+                      alt="user image"
+                      className="object-cover h-full w-full"
+                    />
                   </figure>
                   <div className="card-body">
                     <h2 className="card-title">
@@ -76,7 +82,7 @@ function feed() {
                         onClick={() =>
                           onSwipe("right", card?.firstName, card?._id)
                         }
-                        className=" badge badge-outline bg-pink-600 text-lg p-4 hover:bg-sky-500 "
+                        className="badge badge-outline bg-pink-600 text-lg p-4 hover:bg-sky-500"
                       >
                         Like
                       </button>
@@ -84,9 +90,9 @@ function feed() {
                         onClick={() =>
                           onSwipe("left", card?.firstName, card?._id)
                         }
-                        className=" badge badge-outline text-lg p-4 hover:bg-sky-500 "
+                        className="badge badge-outline text-lg p-4 hover:bg-sky-500"
                       >
-                        pass
+                        Pass
                       </button>
                     </div>
                   </div>

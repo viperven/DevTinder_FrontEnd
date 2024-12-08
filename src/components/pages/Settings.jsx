@@ -130,9 +130,9 @@ const Settings = () => {
         </dialog>
       }
 
-      <div className="flex min-h-screen bg-base-200">
+      <div className="flex flex-col lg:flex-row min-h-screen bg-base-200">
         {/* Sidebar */}
-        <aside className="w-1/6 bg-base-300 text-base">
+        <aside className="w-full lg:w-1/6 bg-base-300 text-base">
           <div className="p-4">
             <h2 className="text-lg font-bold">Settings</h2>
           </div>
@@ -178,10 +178,10 @@ const Settings = () => {
         </aside>
 
         {/* Main Content */}
-        <main className="w-3/4 p-8">
+        <main className="w-full md:w-3/4 p-4 md:p-8">
           {/* Profile Section */}
           <section id="profile" className="card bg-base shadow-xl p-6 mb-6">
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col md:flex-row items-center space-x-4">
               <img
                 src={userData?.photoUrl}
                 alt="Profile"
@@ -203,7 +203,7 @@ const Settings = () => {
                 {userData?.keySkills?.map((skill, index) => (
                   <div
                     key={index}
-                    className="badge badge-secondary ml-4 text-black p-4"
+                    className="badge badge-secondary ml-4 text-black p-4 mt-2"
                   >
                     {skill}
                   </div>
@@ -249,7 +249,10 @@ const Settings = () => {
                 }}
               />
             </div>
-            <button className="btn btn-primary" onClick={handlePasswordChange}>
+            <button
+              className="btn btn-primary w-full"
+              onClick={handlePasswordChange}
+            >
               Update Password
             </button>
           </section>
@@ -262,7 +265,7 @@ const Settings = () => {
             <h2 className="text-xl font-bold mb-4">
               Communication Preferences
             </h2>
-            <div className="form-control">
+            <div className="form-control mb-4">
               <label className="label cursor-pointer">
                 <span className="label-text">Receive Email Notifications</span>
                 <input
@@ -275,7 +278,7 @@ const Settings = () => {
                 />
               </label>
             </div>
-            <div className="form-control">
+            <div className="form-control mb-4">
               <label className="label cursor-pointer">
                 <span className="label-text">Informational Emails</span>
                 <input
@@ -288,7 +291,7 @@ const Settings = () => {
                 />
               </label>
             </div>
-            <div className="form-control">
+            <div className="form-control mb-4">
               <label className="label cursor-pointer">
                 <span className="label-text">Updates</span>
                 <input
@@ -309,7 +312,7 @@ const Settings = () => {
             <p className="text-red-500 mb-4">
               Warning: Deleting your account is permanent and cannot be undone.
             </p>
-            <button className="btn btn-error" onClick={handleDeleteUser}>
+            <button className="btn btn-error w-full" onClick={handleDeleteUser}>
               Delete My Account
             </button>
           </section>

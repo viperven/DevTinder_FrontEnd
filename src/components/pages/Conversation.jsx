@@ -114,7 +114,9 @@ function Conversation() {
                           {formatTime(cur.createdAt)}
                         </time>
                       </div>
-                      <div className="chat-bubble">{cur.content}</div>
+                      <div className="chat-bubble  break-words ">
+                        {cur.content}
+                      </div>
                       <div className="chat-footer opacity-50">
                         {isSender ? "Delivered" : "Seen"}
                       </div>

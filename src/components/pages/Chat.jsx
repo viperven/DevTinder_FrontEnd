@@ -60,13 +60,13 @@ const Chat = () => {
   return (
     <Layout>
       <div className="flex justify-center mt-2">
-        <div className="mockup-phone">
+        <div className="mockup-phone mockup-phone min-w-full md:min-w-52">
           <div className="camera"></div>
           <div className="display">
             <div className="bg-base-100 min-h-screen flex justify-center">
               <div className="max-w-lg w-full min-w-52 bg-base shadow-lg rounded-lg p-4">
                 <h1 className="text-2xl font-bold mb-4 text-white">Chats</h1>
-                {lastChatData.length > 0 &&
+                {lastChatData.length > 0 ? (
                   lastChatData.map((chat, i) => {
                     const otherUser =
                       chat.senderID._id === loggedInUserId
@@ -96,7 +96,7 @@ const Chat = () => {
                           <h2 className="font-semibold text-white">
                             {otherUser?.firstName}
                           </h2>
-                          <p className="text-sm text-white truncate">
+                          <p className="text-sm text-white break-words">
                             {chat?.lastMessage?.content}
                           </p>
                         </div>
@@ -114,7 +114,12 @@ const Chat = () => {
                         </div>
                       </div>
                     );
-                  })}
+                  })
+                ) : (
+                  <p>
+                    No chat found kindly send chat message to your connections !
+                  </p>
+                )}
               </div>
             </div>
           </div>

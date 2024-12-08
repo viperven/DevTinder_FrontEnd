@@ -49,7 +49,7 @@ function Requests() {
 
   return (
     <Layout>
-      <div className="grid grid-cols-2 gap-4 p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
         {userRequests &&
           userRequests.map((request) => (
             <div
@@ -60,15 +60,19 @@ function Requests() {
                 <img
                   src={request?.senderID?.photoUrl}
                   alt="profile image"
-                  className="h-28 w-32"
+                  className="h-24 w-28 sm:h-28 sm:w-32 object-cover"
                 />
               </figure>
-              <div className="card-body">
-                <h2 className="card-title">{request?.senderID?.firstName}</h2>
-                <p>{request?.senderID?.summary}</p>
+              <div className="card-body p-2 sm:p-4">
+                <h2 className="card-title text-sm sm:text-lg">
+                  {request?.senderID?.firstName}
+                </h2>
+                <p className="text-xs sm:text-base">
+                  {request?.senderID?.summary}
+                </p>
                 <div className="card-actions justify-end">
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-primary text-xs sm:text-base"
                     onClick={() => {
                       reviewRequest("accepted", request?.senderID?._id);
                     }}
@@ -76,7 +80,7 @@ function Requests() {
                     Accept
                   </button>
                   <button
-                    className="btn btn-danger"
+                    className="btn btn-danger text-xs sm:text-base"
                     onClick={() => {
                       reviewRequest("ignored", request?.senderID?._id);
                     }}
