@@ -79,11 +79,10 @@ const logout = () => {
 const getApiAuthorizationConfig = () => {
   let config = "";
   if (CookieService.getCookie("token")) {
-      config = 'Bearer ' + CookieService.getCookie("token")
+    config = "Bearer " + CookieService.getCookie("token");
   }
   return config;
-}
-
+};
 
 export const AuthService = {
   loginUser,
@@ -91,5 +90,5 @@ export const AuthService = {
   isAuthenticatedUser,
   logout,
   register,
-  getApiAuthorizationConfig
+  getApiAuthorizationConfig,
 };

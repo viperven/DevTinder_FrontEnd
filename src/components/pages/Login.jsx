@@ -3,6 +3,9 @@ import { AuthService } from "../../services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../utils/userSlice";
+import CookieService from "../../services/CookieService";
+const cookieName = "token";
+const cookieExpairy = 1;
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +19,8 @@ const Login = () => {
     e.preventDefault();
     const data = await AuthService.loginUser(formData);
     if (data?.isSuccess) {
+      debugger;
+      CookieService.setCookie(cookieName, data.token, cookieExpairy);
       dispatch(addUser(data?.apiData));
       navigate("/");
     } else {

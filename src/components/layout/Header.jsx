@@ -13,6 +13,7 @@ function Hearder() {
 
   const initHeaderData = async () => {
     try {
+      debugger;
       if (user && typeof user === "object" && user?._id) {
         setHeaderData(user);
         return;
