@@ -10,7 +10,7 @@ export const useSocket = () => {
     const socketInstance = io(SOCKET_SERVER_URL);
 
     socketInstance.on("connect", () => {
-      console.log("Connected to Socket.IO server");
+      // console.log("Connected to Socket.IO server");
     });
 
     socketInstance.on("connect_error", (err) => {

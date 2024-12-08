@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 
 function Conversation() {
   const socket = useSocket();
-  const { cid,rid } = useParams();
+  const { cid, rid } = useParams();
   const [messageList, setMessageList] = useState([]);
   const loggedInUserId = useSelector((state) => state.user._id);
   const loggedInUser = useSelector((state) => state.user);
@@ -27,7 +27,6 @@ function Conversation() {
   };
 
   const handleSendMessage = async () => {
-    debugger
     if (!message.trim()) return;
 
     try {
@@ -59,7 +58,7 @@ function Conversation() {
   useEffect(() => {
     if (socket && cid) {
       socket.emit("joinRoom", cid);
-      console.log("Joined room:", cid);
+      // console.log("Joined room:", cid);
     }
   }, [socket, cid]);
 
@@ -67,7 +66,7 @@ function Conversation() {
     if (!socket) return;
 
     socket.on("receiveMessage", (newMessage) => {
-      console.log("New message received:", newMessage);
+      // console.log("New message received:", newMessage);
       setMessageList((prevMessages) => [...prevMessages, newMessage]);
     });
 
@@ -98,10 +97,11 @@ function Conversation() {
                       <div className="chat-image avatar">
                         <div className="w-10 rounded-full">
                           <img
-                            alt={`${isSender
+                            alt={`${
+                              isSender
                                 ? loggedInUser?.firstName
                                 : user.firstName
-                              } profile image`}
+                            } profile image`}
                             src={
                               isSender ? loggedInUser?.photoUrl : user.photoUrl
                             }
@@ -109,9 +109,7 @@ function Conversation() {
                         </div>
                       </div>
                       <div className="chat-header">
-                        {isSender
-                          ? loggedInUser?.firstName
-                          : user.firstName} 
+                        {isSender ? loggedInUser?.firstName : user.firstName}
                         <time className="text-xs opacity-50">
                           {formatTime(cur.createdAt)}
                         </time>

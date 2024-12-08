@@ -11,22 +11,19 @@ function Requests() {
   const disPatch = useDispatch();
   const navigate = useNavigate();
 
-
   const reviewRequest = async (status, id) => {
     try {
       if (!status && !id) {
-        return
+        return;
       }
       const data = await DataService.reviewRequest(status, id);
       if (data?.isSuccess) {
         disPatch(removeRequest(id));
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err?.message);
-
     }
-  }
+  };
 
   const getRequests = async () => {
     try {
@@ -42,8 +39,6 @@ function Requests() {
     }
   };
 
-  console.log(userRequests);
-
   useEffect(() => {
     if (!AuthService.isAuthenticatedUser()) {
       navigate("/login");
@@ -57,7 +52,10 @@ function Requests() {
       <div className="grid grid-cols-2 gap-4 p-4">
         {userRequests &&
           userRequests.map((request) => (
-            <div key={request._id} className="card card-side bg-base-100 shadow-xl" >
+            <div
+              key={request._id}
+              className="card card-side bg-base-100 shadow-xl"
+            >
               <figure className="pl-3">
                 <img
                   src={request?.senderID?.photoUrl}
@@ -69,8 +67,22 @@ function Requests() {
                 <h2 className="card-title">{request?.senderID?.firstName}</h2>
                 <p>{request?.senderID?.summary}</p>
                 <div className="card-actions justify-end">
-                  <button className="btn btn-primary" onClick={()=>{reviewRequest("accepted",request?.senderID?._id)}}>Accept</button>
-                  <button className="btn btn-danger" onClick={()=>{reviewRequest("ignored",request?.senderID?._id)}}>Decline</button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      reviewRequest("accepted", request?.senderID?._id);
+                    }}
+                  >
+                    Accept
+                  </button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                      reviewRequest("ignored", request?.senderID?._id);
+                    }}
+                  >
+                    Decline
+                  </button>
                 </div>
               </div>
             </div>

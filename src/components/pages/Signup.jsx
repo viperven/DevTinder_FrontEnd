@@ -16,10 +16,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      console.log(formData.email);
       const data = await AuthService.register(formData);
-      console.log(data);
-
       if (data?.isSuccess) {
         dispatch(addUser(data?.apiData));
         navigate("/");

@@ -4,9 +4,6 @@ import Layout from "../layout/Layout";
 import { DataService } from "../../services/DataSerivce";
 import { useDispatch, useSelector } from "react-redux";
 import { storeFeed, removeFeed } from "../../utils/feedSlice";
-
-import img1 from "../../assets/images/car.png";
-import img2 from "../../assets/images/bullet_train.png";
 import { AuthService } from "../../services/AuthService";
 
 function feed() {

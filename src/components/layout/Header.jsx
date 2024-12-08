@@ -8,12 +8,12 @@ import { addUser } from "../../utils/userSlice";
 function Hearder() {
   const [userSelectedTheme, setUserSelectedTheme] = useState("");
   const [headerData, setHeaderData] = useState("");
+  const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((state) => state.user);
   const disPatch = useDispatch();
 
   const initHeaderData = async () => {
     try {
-      debugger;
       if (user && typeof user === "object" && user?._id) {
         setHeaderData(user);
         return;
@@ -47,7 +47,13 @@ function Hearder() {
     }
   };
 
+  const checkUserLoggedIn = () => {
+    const check = AuthService.isAuthenticatedUser();
+    setShowMenu(check);
+  };
+
   useEffect(() => {
+    checkUserLoggedIn();
     initHeaderData();
     initSetTheme();
   }, []);
@@ -58,7 +64,7 @@ function Hearder() {
       style={{ borderRadius: "6px" }}
     >
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <a className="btn btn-ghost text-xl">DevTinder</a>
       </div>
       <label className="flex cursor-pointer gap-2 pr-3">
         <svg
@@ -98,58 +104,69 @@ function Hearder() {
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
       </label>
-      <div className="flex-none">
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow"
-          >
-            <div className="card-body">
-              <span className="text-lg font-bold">8 Items</span>
-              <span className="text-info">Subtotal: $999</span>
-              <div className="card-actions">
-                <button className="btn btn-primary btn-block">View cart</button>
+      {showMenu && showMenu ? (
+        <div className="flex-none">
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow"
+            >
+              <div className="card-body">
+                <span className="text-lg font-bold">8 Items</span>
+                <span className="text-info">Subtotal: $999</span>
+                <div className="card-actions">
+                  <button className="btn btn-primary btn-block">
+                    View cart
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <h3>{headerData?.firstName}</h3>
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src={headerData?.photoUrl}
-              />
+          <h3>{headerData?.firstName}</h3>
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-10 rounded-full">
+                <img
+                  alt="Tailwind CSS Navbar component"
+                  src={headerData?.photoUrl}
+                />
+              </div>
             </div>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-          >
-            <li>
-              <NavLink to="/profile" className="justify-between">
-                Profile
-                <span className="badge">New</span>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
+              <li>
+                <NavLink to="/profile" className="justify-between">
+                  Profile
+                  <span className="badge">New</span>
+                </NavLink>
+              </li>
+              <NavLink to="/">Home</NavLink>
+              <NavLink to="/feed">Feed</NavLink>
+              <NavLink to="/requests">Requests</NavLink>
+              <NavLink to="/connection">Connections</NavLink>
+              <NavLink to="/ignore">Ignore</NavLink>
+              <NavLink to="/settings">Settings</NavLink>
+              <NavLink to="/chat">Chat</NavLink>
+              <NavLink to="/login" onClick={handleLogout}>
+                Logout
               </NavLink>
-            </li>
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/feed">Feed</NavLink>
-            <NavLink to="/requests">Requests</NavLink>
-            <NavLink to="/connection">Connections</NavLink>
-            <NavLink to="/ignore">Ignore</NavLink>
-            <NavLink to="/settings">Settings</NavLink>
-            <NavLink to="/chat">Chat</NavLink>
-            <NavLink to="/login" onClick={handleLogout}>
-              Logout
-            </NavLink>
-          </ul>
+            </ul>
+          </div>
         </div>
-      </div>
+      ) : (
+        <NavLink
+          to="/login"
+          className="cursor-pointer px-4 py-2 text-white bg-base-100 rounded hover:bg-base-300 transition duration-300"
+        >
+          Login
+        </NavLink>
+      )}
     </div>
   );
 }

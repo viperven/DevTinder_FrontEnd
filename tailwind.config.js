@@ -8,6 +8,6 @@ export default {
   },
   plugins: [daisyui],
   daisyui: {
-    themes: ["dracula","winter"],
+    themes: ["dracula", "winter"],
   },
 };

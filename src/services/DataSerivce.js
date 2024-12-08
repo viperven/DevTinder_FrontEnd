@@ -29,8 +29,6 @@ const getFeedData = async (pageSize = null, pageIndex = null) => {
 
 const getProfileData = async () => {
   try {
-    console.log(AuthService.getApiAuthorizationConfig(), "ss");
-
     const res = await fetch(DomainService.GetBaseUrl() + "profile/view", {
       method: "GET",
       headers: {
@@ -244,8 +242,6 @@ const getAllMessageByUserId = async (conversationId) => {
 
 const sendMessage = async (formData) => {
   try {
-    console.log(formData);
-
     const res = await fetch(DomainService.GetBaseUrl() + "message/send", {
       method: "POST",
       headers: {

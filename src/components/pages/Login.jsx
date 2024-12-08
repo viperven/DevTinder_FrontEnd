@@ -19,7 +19,6 @@ const Login = () => {
     e.preventDefault();
     const data = await AuthService.loginUser(formData);
     if (data?.isSuccess) {
-      debugger;
       CookieService.setCookie(cookieName, data.token, cookieExpairy);
       dispatch(addUser(data?.apiData));
       navigate("/");

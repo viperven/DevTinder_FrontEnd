@@ -24,26 +24,23 @@ const Settings = () => {
 
   const handlePasswordChange = async () => {
     try {
-      debugger
       if (resetPassword.newPassword !== resetPassword.confirmPassword) {
         // setShowModal(true);
         alert("new Password ad confirm password not matched");
         return;
       }
       const parameter = {
-        "emailId": userData.emailId,
-        "newPassword": resetPassword.newPassword,
-        "userOtp": resetPassword.otp,
-        "step": "0"
-      }
+        emailId: userData.emailId,
+        newPassword: resetPassword.newPassword,
+        userOtp: resetPassword.otp,
+        step: "0",
+      };
       const data = await DataService.updatePassword(parameter);
       if (data?.isSuccess) {
         document.getElementById("my_modal_3").showModal();
+      } else {
+        alert("something went wrong try again later");
       }
-      else {
-        alert("something went wrong try again later")
-      }
-
     } catch (err) {
       console.log(err?.message);
     }
@@ -52,32 +49,26 @@ const Settings = () => {
   const handleVerifyOtp = async () => {
     try {
       const parameter = {
-        "emailId": userData.emailId,
-        "newPassword": resetPassword.newPassword,
-        "userOtp": resetPassword.otp,
-        "step": "1"
-      }
-      debugger
+        emailId: userData.emailId,
+        newPassword: resetPassword.newPassword,
+        userOtp: resetPassword.otp,
+        step: "1",
+      };
       const data = await DataService.updatePassword(parameter);
       if (data?.isSucess) {
-        alert("password chnaged sucessfully")
+        alert("password chnaged sucessfully");
         document.getElementById("my_modal_3").close();
-      }
-      else {
+      } else {
         alert("otp missmatch or expired try again");
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err?.message);
     }
-  }
+  };
 
   const handleDeleteUser = async () => {
     try {
-      debugger;
       const data = await DataService.deleteUser();
-      console.log(data);
-
       if (data?.isSuccess) {
         // helper.sucessAlert("User deleted successfully, Redirecting To Browser");
         alert("User deleted successfully, Redirecting To Browser");
@@ -91,7 +82,6 @@ const Settings = () => {
         // helper.errorAlert("Failed to delete user, Please try again");
       }
     } catch (err) {
-      // console.log(err?.message);
       alert("Failed to delete user, Please try again");
       // helper.errorAlert("Failed to delete user, Please try again");
     }
@@ -104,9 +94,6 @@ const Settings = () => {
     }
   }, []);
 
-  console.log(resetPassword);
-
-
   return (
     <Layout>
       {
@@ -117,7 +104,9 @@ const Settings = () => {
               ✕
             </button>
             <h3 className="font-bold text-lg">Enter Your OTP</h3>
-            <p className="py-4">Please enter the 4-digit OTP sent to your phone.</p>
+            <p className="py-4">
+              Please enter the 4-digit OTP sent to your phone.
+            </p>
             <input
               type="text"
               maxLength="4"
@@ -133,11 +122,12 @@ const Settings = () => {
             />
             <div className="flex items-center justify-between mt-2 ">
               <p className="text-indigo-400">Otp will be valid for 2 minutes</p>
-              <button type="button" className="btn" onClick={handleVerifyOtp}>Verify</button>
+              <button type="button" className="btn" onClick={handleVerifyOtp}>
+                Verify
+              </button>
             </div>
           </div>
         </dialog>
-
       }
 
       <div className="flex min-h-screen bg-base-200">
@@ -259,10 +249,7 @@ const Settings = () => {
                 }}
               />
             </div>
-            <button
-              className="btn btn-primary"
-              onClick={handlePasswordChange}
-            >
+            <button className="btn btn-primary" onClick={handlePasswordChange}>
               Update Password
             </button>
           </section>

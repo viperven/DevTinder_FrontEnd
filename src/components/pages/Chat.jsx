@@ -42,9 +42,8 @@ const Chat = () => {
     }
   };
 
-  const handleOpenChat = async (conversationID,receiverID) => {
+  const handleOpenChat = async (conversationID, receiverID) => {
     try {
-      debugger;
       if (!conversationID && !receiverID) {
         return;
       }
@@ -57,7 +56,6 @@ const Chat = () => {
   useEffect(() => {
     getLastConversationMessage();
   }, []);
-  console.log(lastChatData);
 
   return (
     <Layout>
@@ -80,7 +78,7 @@ const Chat = () => {
                         key={otherUser?._id}
                         className="flex items-center gap-4 p-3 rounded-lg hover:bg-base-300 cursor-pointer"
                         onClick={() => {
-                          handleOpenChat(chat?._id,otherUser?._id);
+                          handleOpenChat(chat?._id, otherUser?._id);
                         }}
                       >
                         {/* Avatar */}
