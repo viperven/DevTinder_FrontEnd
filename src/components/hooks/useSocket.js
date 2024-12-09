@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
-const SOCKET_SERVER_URL = "http://localhost:4000"; // Your backend URL
+// const SOCKET_SERVER_URL = "http://localhost:4000"; // Your backend URL
+
+const SOCKET_SERVER_URL =
+  "wss://ia10swmere.execute-api.ap-south-1.amazonaws.com/prod";
 
 export const useSocket = () => {
   const [socket, setSocket] = useState(null);
