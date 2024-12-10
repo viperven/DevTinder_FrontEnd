@@ -7,9 +7,10 @@ import { storeFeed, removeFeed } from "../../utils/feedSlice";
 import { AuthService } from "../../services/AuthService";
 
 function feed() {
-  const [feedData, setFeedData] = useState([]);
-  const userFeed = useSelector((state) => state.feed);
   const disPatch = useDispatch();
+  const userFeed = useSelector((state) => state.feed);
+  const [feedData, setFeedData] = useState([]);
+  const [receiverId, setReceiverId] = useState("");
 
   const onSwipe = async (direction, name, id) => {
     const action = direction === "right" ? "interested" : "rejected";
@@ -21,9 +22,19 @@ function feed() {
     }
   };
 
-  const initProfileData = async () => {
+  const handleDirectRequest = async (id) => {
+    const data = await DataService.sendRequest("interested", receiverId);
+    if (data?.isSuccess) {
+      alert("request sent successfully");
+      setReceiverId("");
+      initProfileData(true);
+    }
+  };
+
+  const initProfileData = async (forceReload = false) => {
     try {
-      if (userFeed.length > 0) {
+      debugger;
+      if (!forceReload && userFeed.length > 0) {
         setFeedData(userFeed);
         return;
       }
@@ -48,6 +59,21 @@ function feed() {
   return (
     <>
       <Layout>
+        <div className="absolute lg:top-32 top-[55rem]  right-20 p-4 bg-base shadow-lg rounded-xl border border-gray-300">
+          <h2 className="text-lg font-semibold mb-4">Send Direct Request</h2>
+          <input
+            type="text"
+            placeholder="Enter receiver ID"
+            onChange={(e) => setReceiverId(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+          />
+          <button
+            onClick={handleDirectRequest}
+            className="w-full bg-blue-600 text-white rounded-md p-2 hover:bg-blue-700 transition duration-200"
+          >
+            Send Request
+          </button>
+        </div>
         <div className="flex items-center justify-center h-[80vh]">
           <div
             className="relative w-[90%] max-w-[350px] h-[60vh] mx-auto"

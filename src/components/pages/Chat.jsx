@@ -60,7 +60,7 @@ const Chat = () => {
   return (
     <Layout>
       <div className="flex justify-center mt-2">
-        <div className="mockup-phone mockup-phone min-w-full md:min-w-52">
+        <div className="mockup-phone mockup-phone border-primary min-w-[30rem] ">
           <div className="camera"></div>
           <div className="display">
             <div className="bg-base-100 min-h-screen flex justify-center">

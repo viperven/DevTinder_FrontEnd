@@ -21,7 +21,7 @@ const Login = () => {
     if (data?.isSuccess) {
       CookieService.setCookie(cookieName, data.token, cookieExpairy);
       dispatch(addUser(data?.apiData));
-      navigate("/");
+      navigate("/feed");
     } else {
       alert("Invalid credentials " + data?.message);
     }

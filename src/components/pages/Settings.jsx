@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { DataService } from "../../services/DataSerivce";
 import { helper } from "../helper";
 import { removeUser } from "../../utils/userSlice";
+import { FaWhatsapp, FaCopy } from "react-icons/fa";
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -87,6 +88,25 @@ const Settings = () => {
     }
   };
 
+  const accountId = userData?._id;
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(accountId);
+    alert("Account ID copied to clipboard!");
+  };
+
+  const shareOnWhatsApp = () => {
+    const message = `Hi! Let's connect and build something awesome. Enter this ID: ${accountId} and let's collaborate!`;
+    const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    AuthService.logout();
+    navigate("/login");
+  };
+
   useEffect(() => {
     if (!AuthService.isAuthenticatedUser()) {
       navigate("/login");
@@ -147,6 +167,14 @@ const Settings = () => {
             </li>
             <li>
               <a
+                href="#share-account"
+                className="block hover:bg-gray-700 p-2 rounded"
+              >
+                Share Acoount
+              </a>
+            </li>
+            <li>
+              <a
                 href="#update-password"
                 className="block hover:bg-gray-700 p-2 rounded"
               >
@@ -170,7 +198,10 @@ const Settings = () => {
               </a>
             </li>
             <li>
-              <a href="#logout" className="block hover:bg-gray-700 p-2 rounded">
+              <a
+                className="block hover:bg-gray-700 p-2 rounded"
+                onClick={handleLogout}
+              >
                 Logout
               </a>
             </li>
@@ -211,6 +242,33 @@ const Settings = () => {
               </p>
             </div>
           </section>
+
+          {/* account share section  */}
+          <div className="card bg-base shadow-xl p-6 mb-6" id="share-account">
+            <h2 className="text-xl font-semibold mb-4">
+              Share Your Account ID
+            </h2>
+            <div className="flex items-center mb-4">
+              <input
+                type="text"
+                value={accountId}
+                readOnly
+                className="flex-1 p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-gray-700"
+              />
+              <button
+                onClick={copyToClipboard}
+                className="p-2 bg-gray-700 text-white rounded-r-md hover:bg-gray-800 transition duration-200"
+              >
+                <FaCopy />
+              </button>
+            </div>
+            <button
+              onClick={shareOnWhatsApp}
+              className="flex items-center justify-center p-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-200"
+            >
+              <FaWhatsapp className="mr-2" /> Share on WhatsApp
+            </button>
+          </div>
 
           {/* Update Password Section */}
           <section
