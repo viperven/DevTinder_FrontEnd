@@ -17,7 +17,7 @@ function Conversation() {
 
   const getConversationMessage = async () => {
     try {
-      const data = await DataService.getAllMessageByUserId(cid);
+      const data = await DataService.getAllMessageByConversationId(cid);
       if (data?.isSuccess) {
         setMessageList(data?.apiData);
       }
@@ -67,6 +67,7 @@ function Conversation() {
 
     socket.on("receiveMessage", (newMessage) => {
       // console.log("New message received:", newMessage);
+      debugger
       setMessageList((prevMessages) => [...prevMessages, newMessage]);
     });
 
@@ -97,11 +98,10 @@ function Conversation() {
                       <div className="chat-image avatar">
                         <div className="w-10 rounded-full">
                           <img
-                            alt={`${
-                              isSender
+                            alt={`${isSender
                                 ? loggedInUser?.firstName
                                 : user.firstName
-                            } profile image`}
+                              } profile image`}
                             src={
                               isSender ? loggedInUser?.photoUrl : user.photoUrl
                             }

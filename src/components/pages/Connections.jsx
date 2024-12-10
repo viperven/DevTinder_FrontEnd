@@ -28,6 +28,17 @@ function Connection() {
     }
   };
 
+  const handleOpenChat = async (receiverID) => {
+    try {
+      if (!receiverID) {
+        return;
+      }
+      navigate(`/conversation/${receiverID}`);
+    } catch (err) {
+      console.log(err?.message);
+    }
+  };
+
   useEffect(() => {
     if (!AuthService.isAuthenticatedUser()) {
       navigate("/login");
@@ -67,9 +78,7 @@ function Connection() {
                   <div className="card-actions justify-end">
                     <button
                       className="btn btn-primary text-xs sm:text-base"
-                      onClick={() => {
-                        reviewRequest("accepted", request?.senderID?._id);
-                      }}
+                      onClick={() => handleOpenChat(otherUser?._id) }
                     >
                       Chat
                     </button>

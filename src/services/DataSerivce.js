@@ -216,8 +216,8 @@ const getConnectionsLastMessage = async () => {
   }
 };
 
-//GET all message by user id
-const getAllMessageByUserId = async (conversationId) => {
+//GET all message by conversation id
+const getAllMessageByConversationId = async (conversationId) => {
   try {
     const res = await fetch(
       DomainService.GetBaseUrl() +
@@ -260,6 +260,31 @@ const sendMessage = async (formData) => {
   }
 };
 
+//GET all message by user id
+const getAllMessageByUserId = async (receiverId) => {
+  try {
+    const res = await fetch(
+      DomainService.GetBaseUrl() +
+        "message/messageById?receiverId=" +
+        receiverId,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: AuthService.getApiAuthorizationConfig(),
+        },
+        credentials: "include",
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+
 export const DataService = {
   getFeedData,
   sendRequest,
@@ -271,6 +296,7 @@ export const DataService = {
   deleteUser,
   updatePassword,
   getConnectionsLastMessage,
-  getAllMessageByUserId,
+  getAllMessageByConversationId,
   sendMessage,
+  getAllMessageByUserId
 };
