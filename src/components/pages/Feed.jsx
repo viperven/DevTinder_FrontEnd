@@ -67,7 +67,7 @@ function Feed() {
 
   return (
     <Layout>
-      <div className="mt-16 flex flex-col items-center">
+      <div className="mt-16 flex flex-col items-center p-5">
         <AnimatePresence>
           {currentIndex >= 0 && (
             <motion.div
@@ -121,9 +121,8 @@ function Feed() {
             <Heart className="w-8 h-8 text-white" />
           </motion.button>
         </div>
-      </div> 
 
-      <div className="absolute lg:top-32 top-[50rem]  right-10 p-4 bg-base shadow-lg rounded-xl border border-gray-300">
+        <div className="mt-4 p-4 bg-base shadow-lg rounded-xl border border-gray-300">
           <h2 className="text-lg font-semibold mb-4">Send Direct Request</h2>
           <input
             type="text"
@@ -138,6 +137,9 @@ function Feed() {
             Send Request
           </button>
         </div>
+      </div> 
+
+      
     </Layout>
   );
 }
