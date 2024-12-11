@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthService } from "../../services/AuthService";
-import { useDispatch, useSelector } from "react-redux";
 import { DataService } from "../../services/DataSerivce";
 import { addUser } from "../../utils/userSlice";
+// import { setTheme } from "../../utils/themeSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { themeSelector } from "../../utils/themeSlice";
+
 
 function Hearder() {
   const [userSelectedTheme, setUserSelectedTheme] = useState("");
   const [headerData, setHeaderData] = useState("");
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((state) => state.user);
-  const disPatch = useDispatch();
+  
 
   const initHeaderData = async () => {
     try {
@@ -37,14 +40,22 @@ function Hearder() {
     const userTheme = buttonChecked ? "winter" : "dracula";
     setUserSelectedTheme(userTheme);
     localStorage.setItem("theme", userTheme);
+    // useDispatch(setTheme(userTheme));
+    dispatch(themeSelector(!themeSelect));
   };
+
+
+  const themeSelect = useSelector((store) => store.theme.themes);
+  console.log("🚀 ~ Hearder ~ themeSelect:", themeSelect)
+  const dispatch = useDispatch();
+
 
   const initSetTheme = () => {
     const theme = localStorage.getItem("theme");
-    if (theme && theme === "winter") {
-      setUserSelectedTheme("winter");
-      document.getElementById("themeInput").checked = true;
-    }
+    // if (theme && theme === "winter") {
+    //   setUserSelectedTheme("winter");
+    //   document.getElementById("themeInput").checked = true;
+    // }
   };
 
   const checkUserLoggedIn = () => {
@@ -58,12 +69,18 @@ function Hearder() {
     initSetTheme();
   }, []);
 
+  const textColorClass = themeSelect == true ? "text-zinc-900" : "text-white";
+
   return (
     <div
-      className="navbar bg-base-200 border-b-4 border-cyan-50"
-      style={{ borderRadius: "6px" }}
+      className={`navbar bg-black border-b-4${textColorClass}`}
+     
     >
       <div className="flex-1">
+      {/* <img
+                className="w-30 h-10 ml-20"
+                src="https://www.logo.wine/a/logo/Tinder_(app)/Tinder_(app)-Flame-Logo.wine.svg"
+              /> */}
         <a className="btn btn-ghost text-xl">DevTinder</a>
       </div>
       <label className="flex cursor-pointer gap-2 pr-3">
@@ -72,7 +89,7 @@ function Hearder() {
           width="20"
           height="20"
           viewBox="0 0 24 24"
-          fill="none"
+          fill="none" 
           stroke="currentColor"
           strokeWidth="2"
           strokeLinecap="round"
@@ -162,7 +179,7 @@ function Hearder() {
       ) : (
         <NavLink
           to="/login"
-          className="cursor-pointer px-4 py-2 text-white bg-base-100 rounded hover:bg-base-300 transition duration-300"
+          className={`cursor-pointer px-4 py-2 bg-base-100 rounded hover:bg-base-300 transition duration-300 ${textColorClass}`}
         >
           Login
         </NavLink>
