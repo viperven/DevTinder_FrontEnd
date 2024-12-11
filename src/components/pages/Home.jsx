@@ -102,47 +102,53 @@ function Home() {
   ];
 
 
+  const isLoggedIn = user && Object.keys(user).length > 0;
 
   return (
     <Layout>
 
-      <section className="relative h-screen">
-        <img
-          src="https://tinder.com/static/build/8ad4e4299ef5e377d2ef00ba5c94c44c.webp"
-          alt="Grid of profile cards showing various people"
-          className="w-full h-full object-cover "
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center text-white"
-          >
-            <h1 className="text-5xl font-bold mb-4 ">Welcome to DevTinder</h1>
-            <p className="text-xl mb-8">Discover amazing features and services</p>
+<section className="relative h-screen">
+      <img
+        src="https://tinder.com/static/build/8ad4e4299ef5e377d2ef00ba5c94c44c.webp"
+        alt="Grid of profile cards showing various people"
+        className="w-full h-full object-cover "
+      />
+      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center text-white"
+        >
+          <h1 className="text-5xl font-bold mb-4">Welcome to DevTinder</h1>
+          <p className="text-xl mb-8">Discover amazing features and services</p>
 
-            <div className="flex justify-center space-x-4">
-              <button
-                className="bg-gradient-to-r from-rose-500 to-pink-500 text-white text-lg p-5 rounded-lg"
-                onClick={() => {
-                  navigate("/signup");
-                }}
-              >
-                Sign Up
-              </button>
-              <button
-                className="bg-gradient-to-r from-rose-500 to-pink-500 text-white text-lg p-5 rounded-lg"
-                onClick={() => {
-                  navigate("/login");
-                }}
-              >
-                Log In
-              </button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+          <div className="flex justify-center space-x-4">
+  {!AuthService.isAuthenticatedUser() && (
+    <>
+      <button
+        className="bg-gradient-to-r from-rose-500 to-pink-500 text-white text-lg p-5 rounded-lg"
+        onClick={() => {
+          navigate("/signup");
+        }}
+      >
+        Sign Up
+      </button>
+      <button
+        className="bg-gradient-to-r from-rose-500 to-pink-500 text-white text-lg p-5 rounded-lg"
+        onClick={() => {
+          navigate("/login");
+        }}
+      >
+        Log In
+      </button>
+    </>
+  )}
+</div>
+
+        </motion.div>
+      </div>
+    </section>
 
       <section className="px-4 py-20 ">
         <div className="max-w-7xl mx-auto ">
