@@ -45,24 +45,6 @@ const getProfileData = async () => {
   }
 };
 
-const editProfileData = async () => {
-  try {
-    const res = await fetch(DomainService.GetBaseUrl() + "profile/edit", {
-      method: "PATCH",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: AuthService.getApiAuthorizationConfig(),
-      },
-      credentials: "include",
-    });
-    const data = await res.json();
-    return data;
-  } catch (error) {
-    console.error("Error:", error);
-  }
-};
-
 const getRequestsData = async () => {
   try {
     const res = await fetch(DomainService.GetBaseUrl() + "user/received", {
@@ -302,6 +284,7 @@ const getAllMessageByUserId = async (receiverId) => {
   }
 };
 
+
 export const DataService = {
   getFeedData,
   sendRequest,
@@ -315,6 +298,5 @@ export const DataService = {
   getConnectionsLastMessage,
   getAllMessageByConversationId,
   sendMessage,
-  getAllMessageByUserId,
-  editProfileData,
+  getAllMessageByUserId
 };

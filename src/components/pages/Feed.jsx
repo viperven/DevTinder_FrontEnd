@@ -59,7 +59,7 @@ function feed() {
   return (
     <>
       <Layout>
-        <div className="absolute lg:top-32 top-[50rem]  right-10 p-4 bg-base shadow-lg rounded-xl border border-gray-300">
+        <div className="absolute lg:top-32 top-[40rem]  right-10 p-4 bg-base shadow-lg rounded-xl border border-gray-300">
           <h2 className="text-lg font-semibold mb-4">Send Direct Request</h2>
           <input
             type="text"
