@@ -19,13 +19,13 @@ const Footer = () => {
           </div>
           <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>
-              <h2 className="mb-6 text-sm font-semibold  uppercase text-white">Company</h2>
+              <h2 className="mb-6 text-sm font-semibold  uppercase text-white">My Social Link</h2>
               <ul class="text-gray-500 dark:text-gray-400 font-medium">
                 <li class="mb-4">
-                  <a href="" class="hover:underline">About</a>
+                  <a href="https://rupesh-jha-portfolio.netlify.app/" class="hover:underline">My Portfolio</a>
                 </li>
                 <li>
-                  <a href="" class="hover:underline">Careers</a>
+                  <a href="https://www.linkedin.com/in/i-am-rupesh/" class="hover:underline">My Linkedin</a>
                 </li>
               </ul>
             </div>

@@ -12,6 +12,8 @@ const Settings = () => {
   const navigate = useNavigate();
   const disPatch = useDispatch();
   const userData = useSelector((state) => state.user);
+  const accountId = userData?._id;
+  
   const [showModal, setShowModal] = useState(false);
   const [communicationPreferences, setCommunicationPreferences] =
     useState(false);
@@ -88,7 +90,8 @@ const Settings = () => {
     }
   };
 
-  const accountId = userData?._id;
+
+
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(accountId);

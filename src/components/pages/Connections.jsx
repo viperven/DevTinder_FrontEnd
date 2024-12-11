@@ -9,7 +9,7 @@ import { storeConnection } from "../../utils/connectionSlice";
 
 function Connection() {
   const userConnections = useSelector((state) => state?.connection);
-  const loggedInUserId = useSelector((state) => state.user._id);
+  const loggedInUserId = useSelector((state) => state.user?._id);
 
   const disPatch = useDispatch();
   const navigate = useNavigate();
@@ -78,7 +78,7 @@ function Connection() {
                   <div className="card-actions justify-end">
                     <button
                       className="btn btn-primary text-xs sm:text-base"
-                      onClick={() => handleOpenChat(otherUser?._id) }
+                      onClick={() => handleOpenChat(otherUser?._id)}
                     >
                       Chat
                     </button>

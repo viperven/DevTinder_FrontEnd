@@ -209,12 +209,12 @@ function Home() {
             <div className="bg-gradient-to-r from-rose-500 to-pink-500 text-primary-content grid place-content-center text-9xl font-black"
               style={{ backgroundColor: "yellow" }}
             >
-              FRONTEND KALPIT
+             MADE BY RUPESH JHA
             </div>
           </div>
           <div className="diff-item-2">
             <div className="bg-base-200 grid place-content-center text-9xl font-black" >
-              BACKEND RUPESH JHA
+              STYLED BY KALPIT RAO RAVAN
             </div>
           </div>
           <div className="diff-resizer"></div>

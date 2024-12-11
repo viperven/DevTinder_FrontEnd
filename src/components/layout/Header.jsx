@@ -9,11 +9,12 @@ import { themeSelector } from "../../utils/themeSlice";
 //kalpit
 
 function Hearder() {
+  const dispatch = useDispatch();
+  const themeSelect = useSelector((store) => store.theme.themes);
   const [userSelectedTheme, setUserSelectedTheme] = useState("");
   const [headerData, setHeaderData] = useState("");
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((state) => state.user);
-  
 
   const initHeaderData = async () => {
     try {
@@ -24,7 +25,7 @@ function Hearder() {
       const data = await DataService.getProfileData();
       if (data?.isSuccess) {
         setHeaderData(data?.apiData);
-        disPatch(addUser(data?.apiData));
+        dispatch(addUser(data?.apiData));
       }
     } catch (error) {
       // console.error(error);
@@ -45,9 +46,8 @@ function Hearder() {
   };
 
 
-  const themeSelect = useSelector((store) => store.theme.themes);
-  console.log("🚀 ~ Hearder ~ themeSelect:", themeSelect)
-  const dispatch = useDispatch();
+  
+ 
 
 
   const initSetTheme = () => {

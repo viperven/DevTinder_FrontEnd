@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 function ConversationById() {
+  console.log("ConversationById");
+  
   const socket = useSocket();
   const { rid } = useParams();
   const [messageList, setMessageList] = useState([]);
