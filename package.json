@@ -10,10 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fullpage/react-fullpage": "^0.1.46",
     "@react-spring/web": "^9.5.5",
     "@reduxjs/toolkit": "^2.3.0",
+    "framer-motion": "^11.13.3",
     "jwt-decode": "^4.0.0",
     "lottie-react": "^2.4.0",
+    "lucide-react": "^0.468.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",
