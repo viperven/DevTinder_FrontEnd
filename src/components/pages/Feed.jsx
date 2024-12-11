@@ -1,39 +1,25 @@
 import React, { useEffect, useState } from "react";
-import TinderCard from "react-tinder-card";
-import Layout from "../layout/Layout";
-import { DataService } from "../../services/DataSerivce";
+import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { storeFeed, removeFeed } from "../../utils/feedSlice";
+import { DataService } from "../../services/DataSerivce";
 import { AuthService } from "../../services/AuthService";
+import Layout from "../layout/Layout";
+import { Heart, X } from "lucide-react";
 
-function feed() {
-  const disPatch = useDispatch();
+function Feed() {
+  const dispatch = useDispatch();
   const userFeed = useSelector((state) => state.feed);
   const [feedData, setFeedData] = useState([]);
-  const [receiverId, setReceiverId] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [direction, setDirection] = useState(0);
 
-  const onSwipe = async (direction, name, id) => {
-    const action = direction === "right" ? "interested" : "rejected";
-    const data = await DataService.sendRequest(action, id);
-    if (data?.isSuccess) {
-      const removeCard = feedData.filter((curElm) => curElm._id !== id);
-      setFeedData(removeCard);
-      disPatch(removeFeed(id));
-    }
-  };
-
-  const handleDirectRequest = async (id) => {
-    const data = await DataService.sendRequest("interested", receiverId);
-    if (data?.isSuccess) {
-      alert("request sent successfully");
-      setReceiverId("");
-      initProfileData(true);
-    }
-  };
+  useEffect(() => {
+    setCurrentIndex(feedData.length - 1); // Reset index when feedData changes
+  }, [feedData]);
 
   const initProfileData = async (forceReload = false) => {
     try {
-      debugger;
       if (!forceReload && userFeed.length > 0) {
         setFeedData(userFeed);
         return;
@@ -41,12 +27,13 @@ function feed() {
       const data = await DataService.getFeedData();
       if (data?.isSuccess) {
         setFeedData(data?.apiData);
-        disPatch(storeFeed(data?.apiData));
+        dispatch(storeFeed(data?.apiData));
       }
     } catch (error) {
-      // console.error(error);
+      console.error(error);
     }
   };
+
 
   useEffect(() => {
     if (!AuthService.isAuthenticatedUser()) {
@@ -54,12 +41,89 @@ function feed() {
       return;
     }
     initProfileData();
-  }, []);
+  }, []);    
+  
+  
+  
+  const handleDirectRequest = async (id) => {
+    const data = await DataService.sendRequest("interested", receiverId);
+    if (data?.isSuccess) {
+      alert("request sent successfully");
+      setReceiverId("");
+      initProfileData(true);
+    }
+  }; 
+
+  const swipe = (dir) => {
+    if (currentIndex < 0) return;
+    setDirection(dir);
+
+    setTimeout(() => {
+      const newFeed = [...feedData];
+      newFeed.splice(currentIndex, 1); // Remove current card
+      setFeedData(newFeed);
+    }, 300); // Match animation duration
+  };
 
   return (
-    <>
-      <Layout>
-        <div className="absolute lg:top-32 top-[50rem]  right-10 p-4 bg-base shadow-lg rounded-xl border border-gray-300">
+    <Layout>
+      <div className="mt-16 flex flex-col items-center">
+        <AnimatePresence>
+          {currentIndex >= 0 && (
+            <motion.div
+              key={currentIndex}
+              initial={{ x: direction * 300, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -direction * 300, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="w-full max-w-md rounded-3xl shadow-2xl overflow-hidden"
+            >
+              <img
+                src={feedData[currentIndex]?.photoUrl}
+                alt={feedData[currentIndex]?.firstName}
+                className="w-full h-80 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-2xl font-bold">
+                  {feedData[currentIndex]?.firstName}
+                </h3>
+                <p>{feedData[currentIndex]?.summary || ""}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {feedData[currentIndex]?.keySkills.map((skill, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 bg-rose-100 text-rose-600 rounded-full text-sm"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="flex gap-4 mt-8">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => swipe(-1)} // Pass
+            className="p-4 rounded-full bg-white shadow-lg"
+          >
+            <X className="w-8 h-8 text-rose-500" />
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => swipe(1)} // Like
+            className="p-4 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 shadow-lg"
+          >
+            <Heart className="w-8 h-8 text-white" />
+          </motion.button>
+        </div>
+      </div> 
+
+      <div className="absolute lg:top-32 top-[50rem]  right-10 p-4 bg-base shadow-lg rounded-xl border border-gray-300">
           <h2 className="text-lg font-semibold mb-4">Send Direct Request</h2>
           <input
             type="text"
@@ -74,62 +138,8 @@ function feed() {
             Send Request
           </button>
         </div>
-        <div className="flex items-center justify-center h-[80vh]">
-          <div
-            className="relative w-[90%] max-w-[350px] h-[60vh] mx-auto"
-            style={{ top: "-10%" }}
-          >
-            {feedData.map((card, index) => (
-              <TinderCard
-                key={card._id}
-                onSwipe={(dir) => onSwipe(dir, card?.firstName, card?._id)}
-                className="absolute w-full h-full"
-              >
-                <div className="card bg-base-100 w-full h-full shadow-xl">
-                  <figure>
-                    <img
-                      src={card?.photoUrl}
-                      alt="user image"
-                      className="object-cover h-full w-full"
-                    />
-                  </figure>
-                  <div className="card-body">
-                    <h2 className="card-title">
-                      {card?.firstName}
-                      {card?.keySkills.map((skill, index) => (
-                        <div key={index} className="badge badge-secondary">
-                          {skill}
-                        </div>
-                      ))}
-                    </h2>
-                    <p>{card?.summary || ""}</p>
-                    <div className="card-actions justify-end">
-                      <button
-                        onClick={() =>
-                          onSwipe("right", card?.firstName, card?._id)
-                        }
-                        className="badge badge-outline bg-pink-600 text-lg p-4 hover:bg-sky-500"
-                      >
-                        Like
-                      </button>
-                      <button
-                        onClick={() =>
-                          onSwipe("left", card?.firstName, card?._id)
-                        }
-                        className="badge badge-outline text-lg p-4 hover:bg-sky-500"
-                      >
-                        Pass
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </TinderCard>
-            ))}
-          </div>
-        </div>
-      </Layout>
-    </>
+    </Layout>
   );
 }
 
-export default feed;
+export default Feed;
