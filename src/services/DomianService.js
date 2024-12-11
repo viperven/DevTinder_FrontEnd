@@ -13,3 +13,4 @@ const GetBaseUrl = () => {
 export const DomainService = {
   GetBaseUrl,
 };
+ 
