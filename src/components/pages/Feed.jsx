@@ -15,7 +15,7 @@ function Feed() {
   const [direction, setDirection] = useState(0);
 
   useEffect(() => {
-    setCurrentIndex(feedData.length - 1); // Reset index when feedData changes
+    setCurrentIndex(feedData.length - 1); 
   }, [feedData]);
 
   const initProfileData = async (forceReload = false) => {
@@ -60,87 +60,101 @@ function Feed() {
 
     setTimeout(() => {
       const newFeed = [...feedData];
-      newFeed.splice(currentIndex, 1); // Remove current card
+      newFeed.splice(currentIndex, 1); 
       setFeedData(newFeed);
-    }, 300); // Match animation duration
+    }, 300); 
   };
 
   return (
     <Layout>
-      <div className="mt-16 flex flex-col items-center p-5">
-        <AnimatePresence>
-          {currentIndex >= 0 && (
-            <motion.div
-              key={currentIndex}
-              initial={{ x: direction * 300, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -direction * 300, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="w-full max-w-md rounded-3xl shadow-2xl overflow-hidden"
-            >
-              <img
-                src={feedData[currentIndex]?.photoUrl}
-                alt={feedData[currentIndex]?.firstName}
-                className="w-full h-80 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-2xl font-bold">
-                  {feedData[currentIndex]?.firstName}
-                </h3>
-                <p>{feedData[currentIndex]?.summary || ""}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {feedData[currentIndex]?.keySkills.map((skill, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1 bg-rose-100 text-rose-600 rounded-full text-sm"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
+  <div className="relative w-full min-h-screen mt-16 flex flex-col items-center p-5">
+    {feedData.length > 0 ? (
+      <AnimatePresence>
+        {currentIndex >= 0 && (
+          <motion.div
+            key={currentIndex}
+            initial={{ x: direction * 300, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -direction * 300, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="w-full max-w-md rounded-3xl shadow-2xl overflow-hidden"
+          >
+            <img
+              src={feedData[currentIndex]?.photoUrl}
+              alt={feedData[currentIndex]?.firstName}
+              className="w-full h-80 object-cover"
+            />
+            <div className="p-6">
+              <h3 className="text-2xl font-bold">
+                {feedData[currentIndex]?.firstName}
+              </h3>
+              <p>{feedData[currentIndex]?.summary || ""}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {feedData[currentIndex]?.keySkills.map((skill, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 bg-rose-100 text-rose-600 rounded-full text-sm"
+                  >
+                    {skill}
+                  </span>
+                ))}
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    ) : (
+      <div className="text-center mt-16">
+        <h2 className="text-2xl font-semibold text-gray-700">
+          No feed data available.
+        </h2>
+        <p className="text-gray-500 mt-2">
+          Please check back later or refresh the page.
+        </p>
+      </div>
+    )}
 
-        <div className="flex gap-4 mt-8">
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => swipe(-1)} // Pass
-            className="p-4 rounded-full bg-white shadow-lg"
-          >
-            <X className="w-8 h-8 text-rose-500" />
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => swipe(1)} // Like
-            className="p-4 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 shadow-lg"
-          >
-            <Heart className="w-8 h-8 text-white" />
-          </motion.button>
-        </div>
+    {feedData.length > 0 && (
+      <div className="flex gap-4 mt-8">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => swipe(-1)} // Pass
+          className="p-4 rounded-full bg-white shadow-lg"
+        >
+          <X className="w-8 h-8 text-rose-500" />
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => swipe(1)} // Like
+          className="p-4 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 shadow-lg"
+        >
+          <Heart className="w-8 h-8 text-white" />
+        </motion.button>
+      </div>
+    )}
 
-        <div className="mt-4 p-4 bg-base shadow-lg rounded-xl border border-gray-300">
-          <h2 className="text-lg font-semibold mb-4">Send Direct Request</h2>
-          <input
-            type="text"
-            placeholder="Enter receiver ID"
-            onChange={(e) => setReceiverId(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
-          />
-          <button
-            onClick={handleDirectRequest}
-            className="w-full bg-blue-600 text-white rounded-md p-2 hover:bg-blue-700 transition duration-200"
-          >
-            Send Request
-          </button>
-        </div>
-      </div> 
+    <div
+      className="w-full lg:w-auto lg:absolute lg:top-16 lg:right-10 p-4 bg-base shadow-lg rounded-xl border border-gray-300 mt-8 lg:mt-0"
+    >
+      <h2 className="text-lg font-semibold mb-4">Send Direct Request</h2>
+      <input
+        type="text"
+        placeholder="Enter receiver ID"
+        onChange={(e) => setReceiverId(e.target.value)}
+        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+      />
+      <button
+        onClick={handleDirectRequest}
+        className="w-full bg-blue-600 text-white rounded-md p-2 hover:bg-blue-700 transition duration-200"
+      >
+        Send Request
+      </button>
+    </div>
+  </div>
+</Layout>
 
-      
-    </Layout>
   );
 }
 
