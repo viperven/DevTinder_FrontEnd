@@ -45,7 +45,7 @@ const getProfileData = async () => {
   }
 };
 
-const editProfileData = async () => {
+const editProfileData = async (form) => {
   try {
     const res = await fetch(DomainService.GetBaseUrl() + "profile/edit", {
       method: "PATCH",
@@ -55,6 +55,7 @@ const editProfileData = async () => {
         Authorization: AuthService.getApiAuthorizationConfig(),
       },
       credentials: "include",
+      body: JSON.stringify(form),
     });
     const data = await res.json();
     return data;

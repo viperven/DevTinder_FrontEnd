@@ -7,10 +7,9 @@ const baseUrlLive =
   "https://ia10swmere.execute-api.ap-south-1.amazonaws.com/prod/";
 
 const GetBaseUrl = () => {
-  return baseUrlLive;
+  return baseUrlDev;
 };
 
 export const DomainService = {
   GetBaseUrl,
 };
- 

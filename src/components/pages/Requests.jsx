@@ -13,6 +13,7 @@ function Requests() {
 
   const reviewRequest = async (status, id) => {
     try {
+      debugger;
       if (!status && !id) {
         return;
       }

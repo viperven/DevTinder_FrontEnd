@@ -17,6 +17,7 @@ function Profile() {
     photoUrl: "",
     summary: "",
   });
+  const [currentSkill, setCurrentSkill] = useState("");
 
   const initProfileData = async () => {
     try {
@@ -38,12 +39,25 @@ function Profile() {
   const handleProfileUpdate = async () => {
     try {
       debugger;
-      const data = await DataService.editProfileData();
+      const data = await DataService.editProfileData(form);
       if (data?.isSuccess) {
         alert("Profile updated successfully");
       }
     } catch (error) {
       // console.error(error);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault(); // Prevent default behavior for Enter or comma
+      if (currentSkill.trim() !== "") {
+        setFormData((prev) => ({
+          ...prev,
+          keySkills: [...prev.keySkills, currentSkill.trim()],
+        }));
+        setCurrentSkill("");
+      }
     }
   };
 
@@ -104,16 +118,12 @@ function Profile() {
                     <span className="label-text font-semibold">Key Skills</span>
                   </label>
                   <input
-                    value={form?.keySkills}
+                    value={currentSkill}
                     type="text"
-                    placeholder="Enter your key skills"
+                    placeholder={form?.keySkills}
                     className="input input-bordered focus:outline-none focus:ring focus:ring-blue-300"
-                    onChange={(e) => {
-                      setFormData((prev) => ({
-                        ...prev,
-                        keySkills: [...prev.keySkills, e.target.value],
-                      }));
-                    }}
+                    onChange={(e) => setCurrentSkill(e.target.value)}
+                    onKeyDown={handleKeyPress} // Add skill on Enter or comma
                   />
                 </div>
                 <div className="form-control mt-4">
@@ -174,7 +184,7 @@ function Profile() {
               />
             </figure>
             <div className="card-body">
-              <h2 className="card-title text-xl font-bold text-gray-800">
+              <h2 className="card-title text-xl font-bold text-white">
                 {form?.firstName} {form?.lastName}
               </h2>
               <div className="flex flex-wrap gap-2 mt-2">
