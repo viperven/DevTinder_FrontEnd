@@ -19,11 +19,13 @@ import {
   Heart,
   X,
   Smartphone,
-} from "lucide-react"; 
+} from "lucide-react";
 
 
+//Kalpit
 
-function Home() {  
+
+function Home() {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
 
@@ -107,48 +109,48 @@ function Home() {
   return (
     <Layout>
 
-<section className="relative h-screen">
-      <img
-        src="https://tinder.com/static/build/8ad4e4299ef5e377d2ef00ba5c94c44c.webp"
-        alt="Grid of profile cards showing various people"
-        className="w-full h-full object-cover "
-      />
-      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center text-white"
-        >
-          <h1 className="text-5xl font-bold mb-4">Welcome to DevTinder</h1>
-          <p className="text-xl mb-8">Discover amazing features and services</p>
+      <section className="relative h-screen">
+        <img
+          src="https://tinder.com/static/build/8ad4e4299ef5e377d2ef00ba5c94c44c.webp"
+          alt="Grid of profile cards showing various people"
+          className="w-full h-full object-cover "
+        />
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center text-white"
+          >
+            <h1 className="text-5xl font-bold mb-4">Welcome to DevTinder</h1>
+            <p className="text-xl mb-8">Discover amazing features and services</p>
 
-          <div className="flex justify-center space-x-4">
-  {!AuthService.isAuthenticatedUser() && (
-    <>
-      <button
-        className="bg-gradient-to-r from-rose-500 to-pink-500 text-white text-lg p-5 rounded-lg"
-        onClick={() => {
-          navigate("/signup");
-        }}
-      >
-        Sign Up
-      </button>
-      <button
-        className="bg-gradient-to-r from-rose-500 to-pink-500 text-white text-lg p-5 rounded-lg"
-        onClick={() => {
-          navigate("/login");
-        }}
-      >
-        Log In
-      </button>
-    </>
-  )}
-</div>
+            <div className="flex justify-center space-x-4">
+              {!AuthService.isAuthenticatedUser() && (
+                <>
+                  <button
+                    className="bg-gradient-to-r from-rose-500 to-pink-500 text-white text-lg p-5 rounded-lg"
+                    onClick={() => {
+                      navigate("/signup");
+                    }}
+                  >
+                    Sign Up
+                  </button>
+                  <button
+                    className="bg-gradient-to-r from-rose-500 to-pink-500 text-white text-lg p-5 rounded-lg"
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                  >
+                    Log In
+                  </button>
+                </>
+              )}
+            </div>
 
-        </motion.div>
-      </div>
-    </section>
+          </motion.div>
+        </div>
+      </section>
 
       <section className="px-4 py-20 ">
         <div className="max-w-7xl mx-auto ">
@@ -157,54 +159,54 @@ function Home() {
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
-  <motion.div
-    whileHover={{
-      scale: 1.05,
-    }}
-    className="text-center animate-on-scroll bg-white/20 backdrop-blur-md rounded-3xl shadow-xl border border-white/20 p-6 transition-transform duration-300 ease-in-out"
-  >
-    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 text-white text-2xl font-bold flex items-center justify-center mx-auto mb-6">
-      1
-    </div>
-    <Code2 className="w-12 h-12 mx-auto mb-4 text-rose-500" />
-    <h3 className="text-xl font-bold mb-4">Create Profile</h3>
-    <p className={`${textColorClass}`}>
-      Build your developer profile with your skills and preferences
-    </p>
-  </motion.div>
+            <motion.div
+              whileHover={{
+                scale: 1.05,
+              }}
+              className="text-center animate-on-scroll bg-white/20 backdrop-blur-md rounded-3xl shadow-xl border border-white/20 p-6 transition-transform duration-300 ease-in-out"
+            >
+              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 text-white text-2xl font-bold flex items-center justify-center mx-auto mb-6">
+                1
+              </div>
+              <Code2 className="w-12 h-12 mx-auto mb-4 text-rose-500" />
+              <h3 className="text-xl font-bold mb-4">Create Profile</h3>
+              <p className={`${textColorClass}`}>
+                Build your developer profile with your skills and preferences
+              </p>
+            </motion.div>
 
-  <motion.div
-    whileHover={{
-      scale: 1.05,
-    }}
-    className="text-center animate-on-scroll bg-white/20 backdrop-blur-md rounded-3xl shadow-xl border border-white/20 p-6 transition-transform duration-300 ease-in-out"
-  >
-    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 text-white text-2xl font-bold flex items-center justify-center mx-auto mb-6">
-      2
-    </div>
-    <Users className="w-12 h-12 mx-auto mb-4 text-rose-500" />
-    <h3 className="text-xl font-bold mb-4">Swipe & Match</h3>
-    <p className={`${textColorClass}`}>
-      Find your perfect code partner with our intuitive swipe interface
-    </p>
-  </motion.div>
+            <motion.div
+              whileHover={{
+                scale: 1.05,
+              }}
+              className="text-center animate-on-scroll bg-white/20 backdrop-blur-md rounded-3xl shadow-xl border border-white/20 p-6 transition-transform duration-300 ease-in-out"
+            >
+              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 text-white text-2xl font-bold flex items-center justify-center mx-auto mb-6">
+                2
+              </div>
+              <Users className="w-12 h-12 mx-auto mb-4 text-rose-500" />
+              <h3 className="text-xl font-bold mb-4">Swipe & Match</h3>
+              <p className={`${textColorClass}`}>
+                Find your perfect code partner with our intuitive swipe interface
+              </p>
+            </motion.div>
 
-  <motion.div
-    whileHover={{
-      scale: 1.05,
-    }}
-    className="text-center animate-on-scroll bg-white/20 backdrop-blur-md rounded-3xl shadow-xl border border-white/20 p-6 transition-transform duration-300 ease-in-out"
-  >
-    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 text-white text-2xl font-bold flex items-center justify-center mx-auto mb-6">
-      3
-    </div>
-    <Rocket className="w-12 h-12 mx-auto mb-4 text-rose-500" />
-    <h3 className="text-xl font-bold mb-4">Start Coding</h3>
-    <p className={`${textColorClass}`}>
-      Begin your collaboration journey together
-    </p>
-  </motion.div>
-</div>
+            <motion.div
+              whileHover={{
+                scale: 1.05,
+              }}
+              className="text-center animate-on-scroll bg-white/20 backdrop-blur-md rounded-3xl shadow-xl border border-white/20 p-6 transition-transform duration-300 ease-in-out"
+            >
+              <div className="w-16 h-16 rounded-full bg-gradient-to-r from-rose-500 to-pink-500 text-white text-2xl font-bold flex items-center justify-center mx-auto mb-6">
+                3
+              </div>
+              <Rocket className="w-12 h-12 mx-auto mb-4 text-rose-500" />
+              <h3 className="text-xl font-bold mb-4">Start Coding</h3>
+              <p className={`${textColorClass}`}>
+                Begin your collaboration journey together
+              </p>
+            </motion.div>
+          </div>
 
         </div>
       </section>
@@ -322,46 +324,46 @@ function Home() {
 
       <section className="px-4 py-20 bg-gradient-to-r from-rose-500 to-pink-500">
         <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-3 gap-8">
-  <motion.div
-    whileHover={{
-      y: -10,
-    }}
-    className="p-8 rounded-xl text-center bg-white/20 backdrop-blur-md border border-white/20 shadow-xl hover:shadow-2xl transition-shadow animate-on-scroll"
-  >
-    <Code className="w-12 h-12 text-white mx-auto mb-4" />
-    <h3 className={`text-xl font-bold mb-4 ${textColorClass}`}>Smart Matching</h3>
-    <p className={`${textColorClass}`}>
-      Our AI matches you with developers based on coding style and expertise
-    </p>
-  </motion.div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <motion.div
+              whileHover={{
+                y: -10,
+              }}
+              className="p-8 rounded-xl text-center bg-white/20 backdrop-blur-md border border-white/20 shadow-xl hover:shadow-2xl transition-shadow animate-on-scroll"
+            >
+              <Code className="w-12 h-12 text-white mx-auto mb-4" />
+              <h3 className={`text-xl font-bold mb-4 ${textColorClass}`}>Smart Matching</h3>
+              <p className={`${textColorClass}`}>
+                Our AI matches you with developers based on coding style and expertise
+              </p>
+            </motion.div>
 
-  <motion.div
-    whileHover={{
-      y: -10,
-    }}
-    className="p-8 text-center rounded-xl bg-white/20 backdrop-blur-md border border-white/20 shadow-xl hover:shadow-2xl transition-shadow animate-on-scroll"
-  >
-    <Globe className="w-12 h-12 text-white mx-auto mb-4" />
-    <h3 className={`text-xl font-bold mb-4 ${textColorClass}`}>Global Reach</h3>
-    <p className={`${textColorClass}`}>
-      Connect with developers worldwide instantly
-    </p>
-  </motion.div>
+            <motion.div
+              whileHover={{
+                y: -10,
+              }}
+              className="p-8 text-center rounded-xl bg-white/20 backdrop-blur-md border border-white/20 shadow-xl hover:shadow-2xl transition-shadow animate-on-scroll"
+            >
+              <Globe className="w-12 h-12 text-white mx-auto mb-4" />
+              <h3 className={`text-xl font-bold mb-4 ${textColorClass}`}>Global Reach</h3>
+              <p className={`${textColorClass}`}>
+                Connect with developers worldwide instantly
+              </p>
+            </motion.div>
 
-  <motion.div
-    whileHover={{
-      y: -10,
-    }}
-    className="p-8 text-center rounded-xl bg-white/20 backdrop-blur-md border border-white/20 shadow-xl hover:shadow-2xl transition-shadow animate-on-scroll"
-  >
-    <Zap className="w-12 h-12 text-white mx-auto mb-4" />
-    <h3 className={`text-xl font-bold mb-4 ${textColorClass}`}>Quick Connect</h3>
-    <p className={`${textColorClass}`}>
-      Start collaborating immediately after matching
-    </p>
-  </motion.div>
-</div>
+            <motion.div
+              whileHover={{
+                y: -10,
+              }}
+              className="p-8 text-center rounded-xl bg-white/20 backdrop-blur-md border border-white/20 shadow-xl hover:shadow-2xl transition-shadow animate-on-scroll"
+            >
+              <Zap className="w-12 h-12 text-white mx-auto mb-4" />
+              <h3 className={`text-xl font-bold mb-4 ${textColorClass}`}>Quick Connect</h3>
+              <p className={`${textColorClass}`}>
+                Start collaborating immediately after matching
+              </p>
+            </motion.div>
+          </div>
 
         </div>
       </section>
