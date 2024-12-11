@@ -96,7 +96,7 @@ const Settings = () => {
   };
 
   const shareOnWhatsApp = () => {
-    const message = `Hi! Let's connect and build something awesome. Enter this ID: ${accountId} and let's collaborate!`;
+    const message = `🚀 Hi there! Let's connect and collaborate on exciting projects. 🔗 Use this unique ID: ${accountId} to send me a connection request. 🌐 Visit my platform here: mydevtinder.netlify.app. Looking forward to building something awesome together! ✨`;
     const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
   };
