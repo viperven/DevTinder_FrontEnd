@@ -21,6 +21,7 @@ const Settings = () => {
     otp: "",
     step: "",
   });
+  const [deleteOtp,setDeleteOtp] = useState("")
 
   const handlePasswordChange = async () => {
     try {
@@ -66,29 +67,41 @@ const Settings = () => {
     }
   };
 
+  const sendDeleteOtp = async () => {
+    try {
+      const isOtpSended = await DataService.sendDeleteOtp();
+      if (isOtpSended?.isSuccess) {
+        document.getElementById("delete_otp_modal").showModal();
+      }
+      else {
+        alert(isOtpSended?.message);
+      }
+    }
+    catch (err) {
+      alert(isOtpSended?.message);
+      console.log(err?.message);
+
+    }
+  }
+
   const handleDeleteUser = async () => {
     try {
-      const data = await DataService.deleteUser();
+      const data = await DataService.deleteUser({userOtp:deleteOtp});
       if (data?.isSuccess) {
-        // helper.sucessAlert("User deleted successfully, Redirecting To Browser");
         alert("User deleted successfully, Redirecting To Browser");
         disPatch(removeUser());
         AuthService.logout();
+        document.getElementById("delete_otp_modal").close();
         setTimeout(() => {
           navigate("/login");
         }, 300);
       } else {
         alert("Failed to delete user, Please try again");
-        // helper.errorAlert("Failed to delete user, Please try again");
       }
     } catch (err) {
       alert("Failed to delete user, Please try again");
-      // helper.errorAlert("Failed to delete user, Please try again");
     }
   };
-
-
-
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(accountId);
@@ -116,39 +129,65 @@ const Settings = () => {
 
   return (
     <Layout>
-      {
-        //modal
-        <dialog id="my_modal_3" className="modal">
-          <div className="modal-box">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-              ✕
+
+      {/* forgot password modal  */}
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box">
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            ✕
+          </button>
+          <h3 className="font-bold text-lg">Enter Your OTP</h3>
+          <p className="py-4">
+            Please enter the 4-digit OTP sent to your Email.
+          </p>
+          <input
+            type="text"
+            maxLength="4"
+            pattern="\d{4}"
+            className="input input-bordered w-full"
+            placeholder="Enter 4-digit OTP"
+            onChange={(e) => {
+              setResetPassword((prev) => ({
+                ...prev,
+                otp: e.target.value,
+              }));
+            }}
+          />
+          <div className="flex items-center justify-between mt-2 ">
+            <p className="text-indigo-400">Otp will be valid for 5 minutes</p>
+            <button type="button" className="btn" onClick={handleVerifyOtp}>
+              Verify
             </button>
-            <h3 className="font-bold text-lg">Enter Your OTP</h3>
-            <p className="py-4">
-              Please enter the 4-digit OTP sent to your Email.
-            </p>
-            <input
-              type="text"
-              maxLength="4"
-              pattern="\d{4}"
-              className="input input-bordered w-full"
-              placeholder="Enter 4-digit OTP"
-              onChange={(e) => {
-                setResetPassword((prev) => ({
-                  ...prev,
-                  otp: e.target.value,
-                }));
-              }}
-            />
-            <div className="flex items-center justify-between mt-2 ">
-              <p className="text-indigo-400">Otp will be valid for 5 minutes</p>
-              <button type="button" className="btn" onClick={handleVerifyOtp}>
-                Verify
-              </button>
-            </div>
           </div>
-        </dialog>
-      }
+        </div>
+      </dialog>
+
+      {/* delete otp modal */}
+      <dialog id="delete_otp_modal" className="modal">
+        <div className="modal-box">
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={() => document.getElementById("delete_otp_modal").close()}>
+            ✕
+          </button>
+          <h3 className="font-bold text-lg">Enter Your OTP</h3>
+          <p className="py-4">
+            Please enter the 4-digit OTP sent to your Email.
+          </p>
+          <input
+            type="text"
+            maxLength="4"
+            pattern="\d{4}"
+            className="input input-bordered w-full"
+            placeholder="Enter 4-digit OTP"
+            onChange={(e) => setDeleteOtp(e.target.value)}
+          />
+          <div className="flex items-center justify-between mt-2 ">
+            <p className="text-indigo-400">Otp will be valid for 5 minutes</p>
+            <button type="button" className="btn" onClick={handleDeleteUser}>
+              Verify
+            </button>
+          </div>
+        </div>
+      </dialog>
 
       <div className="flex flex-col lg:flex-row min-h-screen bg-base-200">
         {/* Sidebar */}
@@ -370,7 +409,7 @@ const Settings = () => {
             <p className="text-red-500 mb-4">
               Warning: Deleting your account is permanent and cannot be undone.
             </p>
-            <button className="btn btn-error w-full" onClick={handleDeleteUser}>
+            <button className="btn btn-error w-full" onClick={sendDeleteOtp}>
               Delete My Account
             </button>
           </section>

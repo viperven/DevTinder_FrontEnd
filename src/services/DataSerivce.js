@@ -5,11 +5,11 @@ const getFeedData = async (pageSize = null, pageIndex = null) => {
   try {
     const res = await fetch(
       DomainService.GetBaseUrl() +
-        "user/feed?" +
-        "pageSize=" +
-        pageSize +
-        "pageIndex=" +
-        pageIndex,
+      "user/feed?" +
+      "pageSize=" +
+      pageSize +
+      "pageIndex=" +
+      pageIndex,
       {
         method: "GET",
         headers: {
@@ -170,9 +170,32 @@ const getIgnoreData = async () => {
   }
 };
 
-//delete user
-const deleteUser = async () => {
+//send delete otp
+const sendDeleteOtp = async () => {
   try {
+    const res = await fetch(DomainService.GetBaseUrl() + "auth/sendDeleteOtp", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: AuthService.getApiAuthorizationConfig(),
+      },
+      credentials: "include",
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+//delete user
+const deleteUser = async (formData) => {
+  try {
+    if (!formData?.userOtp) {
+      return "otp can not be null";
+
+    }
     const res = await fetch(DomainService.GetBaseUrl() + "auth/delete", {
       method: "POST",
       headers: {
@@ -181,6 +204,7 @@ const deleteUser = async () => {
         Authorization: AuthService.getApiAuthorizationConfig(),
       },
       credentials: "include",
+      body: JSON.stringify(formData),
     });
     const data = await res.json();
     return data;
@@ -240,8 +264,8 @@ const getAllMessageByConversationId = async (conversationId) => {
   try {
     const res = await fetch(
       DomainService.GetBaseUrl() +
-        "message/allMessage?conversationID=" +
-        conversationId,
+      "message/allMessage?conversationID=" +
+      conversationId,
       {
         method: "GET",
         headers: {
@@ -284,8 +308,8 @@ const getAllMessageByUserId = async (receiverId) => {
   try {
     const res = await fetch(
       DomainService.GetBaseUrl() +
-        "message/messageById?receiverId=" +
-        receiverId,
+      "message/messageById?receiverId=" +
+      receiverId,
       {
         method: "GET",
         headers: {
@@ -311,6 +335,7 @@ export const DataService = {
   reviewRequest,
   getConnectionData,
   getIgnoreData,
+  sendDeleteOtp,
   deleteUser,
   updatePassword,
   getConnectionsLastMessage,
