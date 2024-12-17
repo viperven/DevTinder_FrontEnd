@@ -20,7 +20,6 @@ function ConversationById() {
 
   const getConversationMessage = async () => {
     try {
-      debugger;
       const data = await DataService.getAllMessageByUserId(rid);
       if (data?.isSuccess) {
         setMessageList(data?.apiData ? data?.apiData : []);
@@ -33,7 +32,6 @@ function ConversationById() {
   };
 
   const handleSendMessage = async () => {
-    debugger;
     if (!message.trim()) return;
 
     try {
@@ -64,7 +62,7 @@ function ConversationById() {
 
   useEffect(() => {
     if (socket && conversationID) {
-      debugger;
+
       socket.emit("joinRoom", conversationID);
       // console.log("Joined room:", conversationID);
     }
@@ -73,7 +71,7 @@ function ConversationById() {
   useEffect(() => {
     try {
       if (!socket) return;
-      debugger;
+  
       socket.on("receiveMessage", (newMessage) => {
         // console.log("New message received:", newMessage);
         console.log(messageList);

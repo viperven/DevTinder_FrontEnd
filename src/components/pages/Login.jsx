@@ -19,7 +19,7 @@ const Login = () => {
     e.preventDefault();
     const data = await AuthService.loginUser(formData);
     if (data?.isSuccess) {
-      CookieService.setCookie(cookieName, data.token, cookieExpairy);
+      CookieService.setCookie(cookieName, data?.token, cookieExpairy);
       dispatch(addUser(data?.apiData));
       navigate("/feed");
     } else {

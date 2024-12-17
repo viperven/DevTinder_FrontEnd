@@ -21,6 +21,26 @@ const loginUser = async (formData) => {
   }
 };
 
+const sendOtp = async (formData) => {
+  try {
+    if (!formData?.emailID) {
+      return "email id required"
+    }
+    const res = await fetch(baseUrl + "/sendOtp", {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
 const register = async (formData) => {
   try {
     const res = await fetch(baseUrl + "/signup", {
@@ -29,7 +49,6 @@ const register = async (formData) => {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      credentials: "include",
       body: JSON.stringify(formData),
     });
     const data = await res.json();
@@ -85,6 +104,7 @@ const getApiAuthorizationConfig = () => {
 };
 
 export const AuthService = {
+  sendOtp,
   loginUser,
   validateToken,
   isAuthenticatedUser,

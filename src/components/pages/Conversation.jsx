@@ -67,7 +67,6 @@ function Conversation() {
 
     socket.on("receiveMessage", (newMessage) => {
       // console.log("New message received:", newMessage);
-      debugger
       setMessageList((prevMessages) => [...prevMessages, newMessage]);
     });
 

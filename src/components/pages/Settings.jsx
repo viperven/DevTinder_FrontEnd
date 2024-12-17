@@ -13,10 +13,7 @@ const Settings = () => {
   const disPatch = useDispatch();
   const userData = useSelector((state) => state.user);
   const accountId = userData?._id;
-  
-  const [showModal, setShowModal] = useState(false);
-  const [communicationPreferences, setCommunicationPreferences] =
-    useState(false);
+  const [communicationPreferences, setCommunicationPreferences] = useState(false);
   const [resetPassword, setResetPassword] = useState({
     emailId: "",
     newPassword: "",
@@ -128,7 +125,7 @@ const Settings = () => {
             </button>
             <h3 className="font-bold text-lg">Enter Your OTP</h3>
             <p className="py-4">
-              Please enter the 4-digit OTP sent to your phone.
+              Please enter the 4-digit OTP sent to your Email.
             </p>
             <input
               type="text"
@@ -144,7 +141,7 @@ const Settings = () => {
               }}
             />
             <div className="flex items-center justify-between mt-2 ">
-              <p className="text-indigo-400">Otp will be valid for 2 minutes</p>
+              <p className="text-indigo-400">Otp will be valid for 5 minutes</p>
               <button type="button" className="btn" onClick={handleVerifyOtp}>
                 Verify
               </button>

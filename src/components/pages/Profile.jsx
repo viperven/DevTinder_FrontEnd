@@ -38,7 +38,6 @@ function Profile() {
 
   const handleProfileUpdate = async () => {
     try {
-      debugger;
       const data = await DataService.editProfileData(form);
       if (data?.isSuccess) {
         alert("Profile updated successfully");

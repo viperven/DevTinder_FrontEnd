@@ -40,7 +40,7 @@ function Feed() {
   };
 
   const swipe = async (direction, id) => {
-    debugger;
+ 
     const action = direction === "right" ? "interested" : "rejected";
     const data = await DataService.sendRequest(action, id);
     if (data?.isSuccess) {
