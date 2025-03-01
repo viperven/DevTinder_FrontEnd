@@ -27,6 +27,7 @@ function Conversation() {
   };
 
   const handleSendMessage = async () => {
+    debugger;
     if (!message.trim()) return;
 
     try {
@@ -97,10 +98,11 @@ function Conversation() {
                       <div className="chat-image avatar">
                         <div className="w-10 rounded-full">
                           <img
-                            alt={`${isSender
+                            alt={`${
+                              isSender
                                 ? loggedInUser?.firstName
                                 : user.firstName
-                              } profile image`}
+                            } profile image`}
                             src={
                               isSender ? loggedInUser?.photoUrl : user.photoUrl
                             }

@@ -18,13 +18,14 @@ import Ignore from "./components/pages/Ignore";
 import Settings from "./components/pages/settings";
 import Conversation from "./components/pages/Conversation";
 import ConversationById from "./components/pages/ConversationById";
+
 // i m kalpit
 function App() {
   return (
     <>
       {/* <Signup /> */}
       <Provider store={store}>
-        <BrowserRouter>  
+        <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
@@ -34,7 +35,7 @@ function App() {
             <Route path="/chat" element={<Chat />} />
             <Route path="/conversation/:cid/:rid" element={<Conversation />} />
             <Route path="/conversation/:rid" element={<ConversationById />} />
-            <Route path="/requests" element={<Requests />} /> 
+            <Route path="/requests" element={<Requests />} />
             <Route path="/connection" element={<Connection />} />
             <Route path="/ignore" element={<Ignore />} />
             <Route path="/settings" element={<Settings />} />
