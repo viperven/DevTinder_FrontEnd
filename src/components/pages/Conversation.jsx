@@ -5,6 +5,8 @@ import { DataService } from "../../services/DataSerivce";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
+//conversation between two person component clicked from /chat
+
 function Conversation() {
   const socket = useSocket();
   const { cid, rid } = useParams();
@@ -12,6 +14,7 @@ function Conversation() {
   const loggedInUserId = useSelector((state) => state.user._id);
   const loggedInUser = useSelector((state) => state.user);
   const [message, setMessage] = useState("");
+  console.log("hkkhkkk");
 
   const formatTime = (date) => new Date(date).toLocaleTimeString();
 

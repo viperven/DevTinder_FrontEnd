@@ -5,9 +5,11 @@ import { DataService } from "../../services/DataSerivce";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
+//called from connection chat button
+
 function ConversationById() {
-  console.log("ConversationById");
-  
+  console.log("ConversationById component");
+
   const socket = useSocket();
   const { rid } = useParams();
   const [messageList, setMessageList] = useState([]);
@@ -62,7 +64,6 @@ function ConversationById() {
 
   useEffect(() => {
     if (socket && conversationID) {
-
       socket.emit("joinRoom", conversationID);
       // console.log("Joined room:", conversationID);
     }
@@ -71,7 +72,7 @@ function ConversationById() {
   useEffect(() => {
     try {
       if (!socket) return;
-  
+
       socket.on("receiveMessage", (newMessage) => {
         // console.log("New message received:", newMessage);
         console.log(messageList);
