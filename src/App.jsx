@@ -11,7 +11,7 @@ import { store } from "./utils/store";
 import { Provider } from "react-redux";
 import Profile from "./components/pages/Profile";
 import Test from "./Test";
-import Chat from "./components/pages/chat";
+import Chat from "./components/pages/Chat";
 import Requests from "./components/pages/Requests";
 import Connection from "./components/pages/Connections";
 import Ignore from "./components/pages/Ignore";
