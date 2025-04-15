@@ -1,96 +1,74 @@
-import React, { useState } from "react";
+import React from "react";
 
 function Test() {
-  const [formData, setFormData] = useState({
-    name: "",
-    emailId: "",
-    password: "",
-  });
-
-  const [errors, setErrors] = useState({});
-
-  const handleFormState = (e, name) => {};
-
-  const checkFormValidations = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const newErrors = {};
-
-    if (formData.name === "") {
-      newErrors.name = "Name is mandatory";
-    } else if (formData.name.length > 50) {
-      newErrors.name = "Name length cannot be greater than 50 letters";
-    }
-
-    if (formData.emailId === "") {
-      newErrors.emailId = "Email ID is mandatory";
-    } else if (!emailRegex.test(formData.emailId)) {
-      newErrors.emailId = "Email ID is not valid";
-    }
-
-    if (formData.password === "") {
-      newErrors.password = "Password is mandatory";
-    } else if (formData.password.length < 8 || formData.password.length > 50) {
-      newErrors.password =
-        "Password length must be between 8 and 50 characters";
-    }
-
-    setErrors(newErrors); // Update the errors state
-    return Object.keys(newErrors).length === 0; // Return validation result
+  const loadRazorpay = (src) => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    const isValid = checkFormValidations();
+  const handlePayment = async () => {
+    const plan = "gold";
+    let userId = "67614548987360f58828a3b1";
 
-    if (isValid) {
-      console.log(formData, "Form submitted successfully");
+    const res = await loadRazorpay(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+
+    if (!res) {
+      alert("Razorpay SDK failed to load.");
+      return;
     }
+
+    const orderData = await fetch(
+      "http://localhost:5000/payment/create-order",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: 500, plan, userId }), // ₹500
+      }
+    ).then((res) => res.json());
+
+    const options = {
+      key: "rzp_test_78YORoOdnuaNHB",
+      amount: orderData.amount,
+      currency: orderData.currency,
+      name: "My Test App",
+      description: "Test Transaction",
+      order_id: orderData.id,
+      handler: function (response) {
+        alert(
+          "Payment successful! Payment ID: " + response.razorpay_payment_id
+        );
+      },
+      prefill: {
+        name: "Your Name",
+        email: "youremail@example.com",
+        contact: "9999999999",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+    rzp.on("payment.failed", function (response) {
+      alert("Payment failed: " + response.error.description);
+      // Optional: send to backend to log failed attempts
+      console.log("💥 Payment Failed", response.error);
+    });
   };
 
   return (
-    <>
-      <div className="container">
-        <h1>Form in React</h1>
-        <div>
-          <input
-            name="username"
-            type="text"
-            placeholder="Enter your name"
-            value={formData.name}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, name: e.target.value }))
-            }
-          />
-          {errors.name && <h6>{errors.name}</h6>}
-
-          <input
-            name="useremailid"
-            type="email"
-            placeholder="Enter your email ID"
-            value={formData.emailId}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, emailId: e.target.value }))
-            }
-          />
-          {errors.emailId && <h6>{errors.emailId}</h6>}
-
-          <input
-            name="userpassword"
-            type="password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, password: e.target.value }))
-            }
-          />
-          {errors.password && <h6>{errors.password}</h6>}
-
-          <button type="submit" onClick={handleFormSubmit}>
-            Submit
-          </button>
-        </div>
-      </div>
-    </>
+    <div>
+      <h2>Razorpay Test Checkout</h2>
+      <button onClick={handlePayment}>Pay ₹500</button>
+    </div>
   );
 }
 

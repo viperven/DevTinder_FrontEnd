@@ -6,6 +6,7 @@ import { DataService } from "../../services/DataSerivce";
 import { AuthService } from "../../services/AuthService";
 import Layout from "../layout/Layout";
 import { Heart, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function Feed() {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ function Feed() {
   const [feedData, setFeedData] = useState([]);
   const [receiverId, setReceiverId] = useState("");
   const [cardDirection, setCardDirection] = useState(0);
-
+  const navigate = useNavigate();
   const initProfileData = async (forceReload = false) => {
     try {
       if (!forceReload && userFeed.length > 0) {
@@ -40,7 +41,6 @@ function Feed() {
   };
 
   const swipe = async (direction, id) => {
- 
     const action = direction === "right" ? "interested" : "rejected";
     const data = await DataService.sendRequest(action, id);
     if (data?.isSuccess) {
